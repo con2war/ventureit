@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone', // This ensures server-side features are enabled
+  output: 'server', // Force server-side rendering
+  typescript: {
+    ignoreBuildErrors: false,
+  },
 }
 
-module.exports = nextConfig // Using CommonJS export instead of ES modules
+module.exports = nextConfig
