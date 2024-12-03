@@ -23,7 +23,7 @@ const projects = [
     description: "Developed a website and app for a long term holiday rental property which also required logo creation and photography for the company",
     image: "/images/K.png?height=200&width=300",
     tags: ["Web Development", "SEO", "Content Management"],
-    url: "https://keeranglenholidayrentals.co.uk"
+    url: "https://keeranglenholidayrental.com"
   },
   {
     name: "Logo Design and Photography",

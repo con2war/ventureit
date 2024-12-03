@@ -29,19 +29,19 @@ export function Header() {
   const NavItems = () => (
     <>
       <button onClick={() => handleNavigation('/')} className="text-left text-lg font-medium text-white hover:text-[#5ce1e6] transition-colors">
-        Home
+        Web Development
       </button>
       <button onClick={() => handleNavigation('/projects')} className="text-left text-lg font-medium text-white hover:text-[#5ce1e6] transition-colors">
-        Projects
+        Our Work
       </button>
       <button onClick={() => handleNavigation('/#services')} className="text-left text-lg font-medium text-white hover:text-[#5ce1e6] transition-colors">
-        Services
+        Development Services
       </button>
       <button onClick={() => handleNavigation('/estimator')} className="text-left text-lg font-medium text-white hover:text-[#5ce1e6] transition-colors">
-        Estimator
+        Project Calculator
       </button>
       <button onClick={() => handleNavigation('/#contact')} className="text-left text-lg font-medium text-white hover:text-[#5ce1e6] transition-colors">
-        Contact
+        Contact Us
       </button>
     </>
   )
