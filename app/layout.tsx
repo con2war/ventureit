@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { CookieConsent } from "@/components/cookie-consent";
+import { structuredData } from './structured-data'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,19 +17,23 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Venture IT',
-  description: 'Transform your business with cutting-edge tech solutions',
-  icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
-    ],
-    shortcut: ['/favicon.ico'],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
-    ],
+  title: 'Venture IT Solutions | Web Development Northern Ireland',
+  description: 'Professional web development and design services in Northern Ireland. Expert website developers in Belfast, Dublin & across Ireland. Custom web applications, e-commerce solutions & responsive design.',
+  keywords: 'web development northern ireland, website design belfast, web developer ireland, custom web applications ni, ecommerce websites ireland, responsive web design belfast, web development company ireland, website development ni, digital solutions northern ireland, web app development belfast',
+  openGraph: {
+    title: 'Venture IT Solutions | Web Development Northern Ireland',
+    description: 'Professional web development and design services in Northern Ireland. Expert website developers in Belfast, Dublin & across Ireland.',
+    images: ['/images/venture_logo.png'],
+    locale: 'en_GB',
+    type: 'website',
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://www.ventureit-solutions.com'
+  }
 }
 
 export default function RootLayout({
@@ -36,10 +42,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="geo.region" content="GB-NIR" />
+        <meta name="geo.placename" content="Belfast" />
+        <meta name="geo.position" content="54.597285;-5.93012" />
+        <meta name="ICBM" content="54.597285, -5.93012" />
+        <meta name="description" content="Professional web development services in Northern Ireland." />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </head>
       <body>
         {children}
-        <Toaster />
       </body>
     </html>
   )
