@@ -74,7 +74,7 @@ export function CookieConsent() {
         >
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <p className="text-white mb-4 md:mb-0 md:mr-4">
-              We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+              We use cookies to enhance your browsing experience and analyse our traffic. By clicking "Accept All", you consent to our use of cookies.
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <Button variant="outline" onClick={() => setShowPreferences(true)}>
