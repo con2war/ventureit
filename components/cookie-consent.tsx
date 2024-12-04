@@ -12,6 +12,7 @@ type CookiePreferences = {
 }
 
 export function CookieConsent() {
+  const [mounted, setMounted] = useState(false)
   const [showConsent, setShowConsent] = useState(false)
   const [showPreferences, setShowPreferences] = useState(false)
   const [preferences, setPreferences] = useState<CookiePreferences>({
@@ -20,14 +21,29 @@ export function CookieConsent() {
     marketing: false,
   })
 
+  // Handle initial mount
   useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent')
-    if (!consent) {
-      setShowConsent(true)
-    } else {
-      setPreferences(JSON.parse(consent))
-    }
+    setMounted(true)
   }, [])
+
+  // Check cookie consent after component is mounted
+  useEffect(() => {
+    if (mounted) {
+      const consent = localStorage.getItem('cookieConsent')
+      if (!consent) {
+        setShowConsent(true)
+      } else {
+        try {
+          setPreferences(JSON.parse(consent))
+        } catch (error) {
+          console.error('Error parsing cookie consent:', error)
+          setShowConsent(true)
+        }
+      }
+    }
+  }, [mounted])
+
+  if (!mounted) return null
 
   const handleAcceptAll = () => {
     const allAccepted = { necessary: true, analytics: true, marketing: true }
@@ -54,7 +70,7 @@ export function CookieConsent() {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
-          className="fixed bottom-0 left-0 right-0 bg-black/90 border-t border-[#5ce1e6]/20 p-4 z-50"
+          className="fixed bottom-0 left-0 right-0 bg-black/90 border-t border-[#5ce1e6]/20 p-4 z-[9999]"
         >
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <p className="text-white mb-4 md:mb-0 md:mr-4">
@@ -71,12 +87,13 @@ export function CookieConsent() {
           </div>
         </motion.div>
       )}
+
       {showPreferences && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-[9999]"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -106,7 +123,10 @@ export function CookieConsent() {
                 </div>
               ))}
             </div>
-            <Button className="w-full mt-6 bg-[#5ce1e6] hover:bg-[#5ce1e6]/90 text-black" onClick={handleSavePreferences}>
+            <Button 
+              className="w-full mt-6 bg-[#5ce1e6] hover:bg-[#5ce1e6]/90 text-black" 
+              onClick={handleSavePreferences}
+            >
               Save Preferences
             </Button>
           </motion.div>
@@ -115,4 +135,3 @@ export function CookieConsent() {
     </AnimatePresence>
   )
 }
-
