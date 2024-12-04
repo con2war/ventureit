@@ -55,8 +55,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
+        <Toaster />
+        <div id="cookie-consent-container">
+          <CookieConsent />
+        </div>
       </body>
     </html>
   )
