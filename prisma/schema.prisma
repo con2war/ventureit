@@ -10,8 +10,8 @@ datasource db {
 model BlogPost {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
-  slug      String   @unique
   content   String
+  slug      String   @unique
   imageUrl  String?
   upvotes   Int      @default(0)
   downvotes Int      @default(0)
