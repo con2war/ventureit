@@ -19,3 +19,8 @@ export function formatDate(date: Date) {
     year: 'numeric'
   })
 }
+
+export function generateExcerpt(content: string, length: number = 150): string {
+  const plainText = content.replace(/<[^>]+>/g, '') // Remove HTML tags
+  return plainText.length > length ? plainText.substring(0, length) + '...' : plainText
+}

@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Head from 'next/head'
+import { generateExcerpt } from '@/lib/utils'
 
 async function getBlogPost(slug: string) {
   const post = await prisma.blogPost.findUnique({
@@ -37,13 +38,15 @@ export default async function BlogPostPage({
     notFound()
   }
 
+  const excerpt = generateExcerpt(post.content)
+
   return (
     <>
       <Head>
         <title>{post.title} | Your Blog Name</title>
-        <meta name="description" content={post.excerpt || 'Read this insightful blog post about...'} />
+        <meta name="description" content={excerpt} />
         <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt || 'Read this insightful blog post about...'} />
+        <meta property="og:description" content={excerpt} />
         <meta property="og:image" content={post.imageUrl || '/default-image.jpg'} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={`https://yourwebsite.com/blog/${post.slug}`} />
