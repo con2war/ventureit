@@ -39,6 +39,7 @@ export default async function BlogPostPage({
   }
 
   const excerpt = generateExcerpt(post.content)
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 
   return (
     <>
@@ -49,14 +50,16 @@ export default async function BlogPostPage({
         <meta property="og:description" content={excerpt} />
         <meta property="og:image" content={post.imageUrl || '/default-image.jpg'} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://yourwebsite.com/blog/${post.slug}`} />
+        <meta property="og:url" content={`${siteUrl}/blog/${slug}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": post.title,
+            "description": excerpt,
             "image": post.imageUrl,
             "datePublished": post.createdAt,
+            "url": `${siteUrl}/blog/${slug}`,
             "author": {
               "@type": "Person",
               "name": "Author Name"
@@ -85,8 +88,8 @@ export default async function BlogPostPage({
               </p>
               <VoteButtons
                 postId={post.id}
-                initialUpvotes={post.upvotes ?? 0}
-                initialDownvotes={post.downvotes ?? 0}
+                initialUpvotes={post.upvotes}
+                initialDownvotes={post.downvotes}
               />
             </div>
           </div>
