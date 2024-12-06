@@ -15,6 +15,7 @@ async function getLatestPosts() {
         slug: true,
         imageUrl: true,
         createdAt: true,
+        updatedAt: true,
         upvotes: true,
         downvotes: true,
       }
