@@ -43,11 +43,14 @@ export function Header() {
       <button onClick={() => handleNavigation('/#contact')} className="text-left text-lg font-medium text-white hover:text-[#5ce1e6] transition-colors">
         Contact Us
       </button>
+      <button onClick={() => handleNavigation('/blog')} className="text-left text-lg font-medium text-white hover:text-[#5ce1e6] transition-colors">
+        News
+      </button>
     </>
   )
 
   return (
-    <motion.header 
+    <motion.header
       className={`fixed w-full z-50 transition-colors duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}

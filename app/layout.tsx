@@ -4,16 +4,21 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { CookieConsent } from "@/components/cookie-consent";
 import { structuredData } from './structured-data'
+import { NewsletterPopup } from '@/components/newsletter-popup'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
+  display: "swap",
+  preload: true,
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -61,6 +66,7 @@ export default function RootLayout({
         <div id="cookie-consent-container">
           <CookieConsent />
         </div>
+        <NewsletterPopup />
       </body>
     </html>
   )
