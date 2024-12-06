@@ -1,104 +1,89 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatDate } from '@/lib/utils'
-import { prisma } from '@/lib/prisma'
 import { ArrowRight, ThumbsUp, ThumbsDown } from 'lucide-react'
-import { CardContent } from '@/components/ui/card'
+import { useInView } from 'react-intersection-observer'
+import { motion } from 'framer-motion'
+import { Card, CardContent } from "@/components/ui/card"
+import { type BlogPost } from '@prisma/client'
 
-async function getLatestPosts() {
-  const posts = await prisma.blogPost.findMany({
-    take: 3,
-    orderBy: {
-      createdAt: 'desc'
-    },
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      slug: true,
-      imageUrl: true,
-      createdAt: true,
-      upvotes: true,
-      downvotes: true,
-    }
-  })
-  return posts
+interface ByteByByteProps {
+  posts: BlogPost[]
 }
 
-export async function ByteByByte() {
-  const posts = await getLatestPosts()
+export function ByteByByte({ posts }: ByteByByteProps) {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
 
   return (
-    <section className="py-24 bg-black">
+    <div className="bg-black py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-white">
-            Byte by Byte
-          </h2>
-          <p className="max-w-[900px] text-zinc-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Explore our latest insights and discoveries in technology
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <Link 
-              key={post.id}
-              href={`/blog/${post.slug}`}
-              className="group relative bg-white/5 rounded-lg overflow-hidden hover:bg-white/10 transition-colors"
-            >
-              {post.imageUrl && (
-                <div className="relative h-48 w-full mb-6 rounded-lg overflow-hidden">
-                  <Image
-                    src={post.imageUrl}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-              )}
-              <CardContent className="p-6">
-                <h3 className="text-xl font-medium text-white mb-2">{post.title}</h3>
-                <div className="flex items-center justify-between mb-4">
-                  <p className="text-sm text-gray-400">
-                    {formatDate(post.createdAt)}
-                  </p>
-                  <div className="flex items-center space-x-4 text-sm text-gray-400">
-                    <div className="flex items-center space-x-1">
-                      <ThumbsUp className="h-4 w-4" />
-                      <span>{post.upvotes ?? 0}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <ThumbsDown className="h-4 w-4" />
-                      <span>{post.downvotes ?? 0}</span>
-                    </div>
-                  </div>
-                </div>
-                <div 
-                  className="text-gray-300 line-clamp-2 mb-4 text-sm"
-                  dangerouslySetInnerHTML={{ 
-                    __html: post.content.substring(0, 150) + '...'
-                  }}
-                />
-                <div className="flex items-center text-[#5ce1e6] font-medium group-hover:underline">
-                  Read More
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </div>
-              </CardContent>
-            </Link>
-          ))}
-        </div>
-
-        <div className="flex justify-center mt-12">
-          <Link
-            href="/blog"
-            className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-black bg-[#5ce1e6] rounded-lg hover:bg-[#5ce1e6]/90 transition-colors"
-          >
-            View All Posts
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </div>
+        <motion.div 
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="lg:text-center"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <Link href={`/blog/${post.slug}`}>
+                  <Card className="bg-white/5 hover:bg-white/10 transition-colors">
+                    <CardContent className="p-6">
+                      {post.imageUrl && (
+                        <div className="relative h-48 w-full mb-6 rounded-lg overflow-hidden">
+                          <Image
+                            src={post.imageUrl}
+                            alt={post.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <h3 className="text-xl font-medium text-white mb-2">{post.title}</h3>
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="text-sm text-gray-400">
+                          {formatDate(post.createdAt)}
+                        </p>
+                        <div className="flex items-center space-x-4 text-sm text-gray-400">
+                          <div className="flex items-center space-x-1">
+                            <ThumbsUp className="h-4 w-4" />
+                            <span>{post.upvotes ?? 0}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <ThumbsDown className="h-4 w-4" />
+                            <span>{post.downvotes ?? 0}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div 
+                        className="text-gray-300 line-clamp-2 mb-4 text-sm"
+                        dangerouslySetInnerHTML={{ 
+                          __html: post.content.substring(0, 150) + '...'
+                        }}
+                      />
+                      <div className="flex items-center text-[#5ce1e6] font-medium group-hover:underline">
+                        Read More
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
-    </section>
+    </div>
   )
 } 
