@@ -1,9 +1,9 @@
 export interface BlogPost {
   id: string
   title: string
-  slug: string
   content: string
-  imageUrl?: string
+  slug: string
+  imageUrl: string | null
   upvotes: number
   downvotes: number
   createdAt: Date
