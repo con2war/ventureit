@@ -1,7 +1,14 @@
 import { PrismaClient } from '@prisma/client'
+import { validateEnv } from './env'
+
+// Validate environment variables
+validateEnv()
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
+  return new PrismaClient({
+    log: ['error', 'warn'],
+    errorFormat: 'minimal',
+  })
 }
 
 declare global {
