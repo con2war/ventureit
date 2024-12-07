@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
+interface EstimateRequest {
+  websiteType: string
+  pages: number
+  features: string[]
+  additionalFeatures: string[]
+  totalCost: number
+  name: string
+  email: string
+  phone: string
+}
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -11,8 +25,15 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    const body = await request.json() as EstimateRequest
     const { websiteType, pages, features, additionalFeatures, totalCost, name, email, phone } = body
+
+    if (!email || !name) {
+      return NextResponse.json(
+        { error: 'Name and email are required' },
+        { status: 400 }
+      )
+    }
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -36,6 +57,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Email error:', error)
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to send email' },
+      { status: 500 }
+    )
   }
+}
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 })
 }

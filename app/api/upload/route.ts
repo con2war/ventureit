@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
 import { nanoid } from 'nanoid'
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function POST(req: Request) {
   try {
     const form = await req.formData()
@@ -10,6 +13,15 @@ export async function POST(req: Request) {
     if (!file) {
       return NextResponse.json(
         { error: 'No file provided' },
+        { status: 400 }
+      )
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json(
+        { error: 'Invalid file type' },
         { status: 400 }
       )
     }
@@ -31,4 +43,8 @@ export async function POST(req: Request) {
       { status: 500 }
     )
   }
+}
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 })
 } 

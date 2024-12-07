@@ -2,9 +2,17 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { type ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
+interface LoginRequest {
+  password: string
+}
+
 export async function POST(req: Request) {
   try {
-    const { password } = await req.json()
+    const body = await req.json() as LoginRequest
+    const { password } = body
     const adminSecret = process.env.ADMIN_SECRET
 
     if (!adminSecret) {
@@ -21,7 +29,6 @@ export async function POST(req: Request) {
       )
     }
 
-    // Set secure cookie for admin session
     const cookieStore = cookies()
     const cookieOptions: Partial<ResponseCookie> = {
       httpOnly: true,
@@ -31,7 +38,6 @@ export async function POST(req: Request) {
       maxAge: 60 * 60 * 24 * 7, // 1 week
     }
 
-    // Ensure adminSecret is treated as a string
     cookieStore.set('admin-token', String(adminSecret), cookieOptions)
 
     return NextResponse.json({ success: true })
@@ -42,4 +48,8 @@ export async function POST(req: Request) {
       { status: 500 }
     )
   }
+}
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 })
 } 
