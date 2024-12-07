@@ -11,5 +11,9 @@
         "memory": 1024,
         "maxDuration": 10
       }
+    },
+    "env": {
+      "PRISMA_GENERATE": "true",
+      "NODE_ENV": "production"
     }
   }

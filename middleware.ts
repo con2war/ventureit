@@ -2,23 +2,16 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Don't protect the login page itself
-  if (request.nextUrl.pathname === '/admin/login') {
-    return NextResponse.next()
-  }
-
-  // Check if trying to access admin routes
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    const authToken = request.cookies.get('admin-token')
-    
-    if (!authToken || authToken.value !== process.env.ADMIN_SECRET) {
-      return NextResponse.redirect(new URL('/admin/login', request.url))
-    }
-  }
+  // Add CORS headers
+  const response = NextResponse.next()
   
-  return NextResponse.next()
+  response.headers.set('Access-Control-Allow-Origin', '*')
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  
+  return response
 }
 
 export const config = {
-  matcher: '/admin/:path*'
+  matcher: '/api/:path*',
 }
