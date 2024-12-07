@@ -7,7 +7,7 @@ import { ArrowRight, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
 import { Card, CardContent } from "@/components/ui/card"
-import { type BlogPost } from '@prisma/client'
+import type { BlogPost } from '@/types/blog'
 
 interface ByteByByteProps {
   posts: BlogPost[]
