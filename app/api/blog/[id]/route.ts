@@ -1,31 +1,29 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: { id: string } }
 ) {
+  if (!params.id) {
+    return NextResponse.json({ error: 'Post ID is required' }, { status: 400 })
+  }
+
   try {
     const post = await prisma.blogPost.findUnique({
-      where: {
-        id: params.id
-      }
+      where: { id: params.id }
     })
 
     if (!post) {
-      return NextResponse.json(
-        { error: 'Post not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
 
     return NextResponse.json(post)
   } catch (error) {
-    console.error('Error fetching post:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch post' },
-      { status: 500 }
-    )
+    console.error('Error:', error)
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
 
@@ -33,42 +31,30 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  if (!params.id) {
+    return NextResponse.json({ error: 'Post ID is required' }, { status: 400 })
+  }
+
   try {
     const { type } = await request.json()
     
     if (type !== 'upvote' && type !== 'downvote') {
-      return NextResponse.json(
-        { error: 'Invalid vote type' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Invalid vote type' }, { status: 400 })
     }
 
-    const post = await prisma.blogPost.findUnique({
-      where: { id: params.id }
-    })
+    const updateData = type === 'upvote' 
+      ? { upvotes: { increment: 1 } }
+      : { downvotes: { increment: 1 } }
 
-    if (!post) {
-      return NextResponse.json(
-        { error: 'Post not found' },
-        { status: 404 }
-      )
-    }
-
-    const updatedPost = await prisma.blogPost.update({
+    const post = await prisma.blogPost.update({
       where: { id: params.id },
-      data: {
-        upvotes: type === 'upvote' ? post.upvotes + 1 : post.upvotes,
-        downvotes: type === 'downvote' ? post.downvotes + 1 : post.downvotes,
-      }
+      data: updateData
     })
 
-    return NextResponse.json(updatedPost)
+    return NextResponse.json(post)
   } catch (error) {
-    console.error('Error updating post:', error)
-    return NextResponse.json(
-      { error: 'Failed to update post' },
-      { status: 500 }
-    )
+    console.error('Error:', error)
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
 
