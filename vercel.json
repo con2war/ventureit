@@ -15,5 +15,7 @@
     "env": {
       "PRISMA_GENERATE": "true",
       "NODE_ENV": "production"
-    }
+    },
+    "cleanUrls": true,
+    "public": true
   }
