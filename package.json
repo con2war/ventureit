@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
-    "vercel-build": "npm install typescript @types/react @types/node @types/react-dom --save && prisma generate && prisma db push && next build"
+    "postinstall": "node scripts/postinstall.js",
+    "vercel-build": "prisma generate && prisma db push && next build"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",
@@ -18,9 +18,20 @@
     "typescript": "^5.3.3",
     "@types/node": "^20.11.25",
     "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21"
+    "@types/react-dom": "^18.2.21",
+    "tailwindcss": "^3.4.1",
+    "lucide-react": "^0.344.0",
+    "framer-motion": "^11.0.8",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
+    "@tailwindcss/typography": "^0.5.10",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
-    "prisma": "^5.10.2"
+    "prisma": "^5.10.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.16"
   }
 }
