@@ -7,7 +7,6 @@ import { Footer } from '@/components/footer'
 import { BlogPostsList } from '@/components/blog-posts-list'
 
 export default async function Home() {
-  
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <Header />
@@ -15,8 +14,8 @@ export default async function Home() {
         <Hero />
         <Services />
         <Testimonials />
-        {/* @ts-expect-error Async Server Component */}
-        <BlogPostsList />
+            {/* @ts-expect-error Async Server Component */}
+            <BlogPostsList />
         <section id="contact" className="bg-black py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-lg mx-auto">
