@@ -1,14 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+  experimental: {
+    serverActions: true,
   },
-  output: 'standalone', // Changed from 'server' to 'standalone'
+  webpack: (config) => {
+    config.resolve = {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        '@': require('path').resolve(__dirname),
+      },
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig
