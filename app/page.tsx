@@ -6,7 +6,7 @@ import { ContactForm } from '@/components/contact-form'
 import { Footer } from '@/components/footer'
 import { BlogPostsList } from '@/components/blog-posts-list'
 
-export default function Home() {
+export default async function Home() {
   
   return (
     <div className="min-h-screen flex flex-col bg-black">
@@ -15,6 +15,7 @@ export default function Home() {
         <Hero />
         <Services />
         <Testimonials />
+        {/* @ts-expect-error Async Server Component */}
         <BlogPostsList />
         <section id="contact" className="bg-black py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
