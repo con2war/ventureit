@@ -1,21 +1,7 @@
 {
-    "version": 2,
-    "framework": "nextjs",
-    "buildCommand": "npm install --save-dev typescript && npm run vercel-build",
-    "devCommand": "next dev",
-    "installCommand": "npm install",
-    "outputDirectory": ".next",
-    "regions": ["iad1"],
-    "functions": {
-      "app/api/**/*": {
-        "memory": 1024,
-        "maxDuration": 10
-      }
-    },
-    "env": {
-      "PRISMA_GENERATE": "true",
-      "NODE_ENV": "production"
-    },
-    "cleanUrls": true,
-    "public": true
-  }
+  "version": 2,
+  "buildCommand": "npm run vercel-build",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "cleanUrls": true
+}
