@@ -7,43 +7,21 @@ import { ArrowRight, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { NewsletterSection } from '@/components/newsletter-section'
 import type { BlogPost } from '@/types/blog'
 
-async function getBlogPosts(searchParams: {
-  page?: string
-  search?: string
-}) {
-  const currentPage = Number(searchParams.page) || 1
-  const postsPerPage = 9
-
+async function getBlogPosts() {
   try {
-    const posts = await prisma.blogPost.findMany({
+    return await prisma.blogPost.findMany({
       orderBy: {
         createdAt: 'desc'
-      },
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        slug: true,
-        imageUrl: true,
-        createdAt: true,
-        updatedAt: true,
-        upvotes: true,
-        downvotes: true,
       }
     })
-    return posts as BlogPost[]
   } catch (error) {
-    console.error('Error fetching posts:', error)
+    console.error('Failed to fetch blog posts:', error)
     return []
   }
 }
 
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams: { page?: string; search?: string }
-}) {
-  const posts = await getBlogPosts(searchParams)
+export default async function BlogPage() {
+  const posts = await getBlogPosts()
 
   return (
     <>
