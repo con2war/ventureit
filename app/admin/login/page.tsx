@@ -10,7 +10,7 @@ export default function AdminLogin() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -21,19 +21,19 @@ export default function AdminLogin() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
+        credentials: 'include',
       })
-
-      const data = await res.json()
 
       if (res.ok) {
         router.push('/admin/blog/manage')
         router.refresh()
       } else {
+        const data = await res.json()
         setError(data.error || 'Invalid password')
       }
     } catch (err) {
       console.error('Login error:', err)
-      setError('An error occurred')
+      setError('An error occurred during login')
     } finally {
       setLoading(false)
     }
@@ -57,6 +57,7 @@ export default function AdminLogin() {
               placeholder="Enter admin password"
               className="bg-white/10 text-white border-[#5ce1e6]/20"
               disabled={loading}
+              autoComplete="current-password"
             />
           </div>
           <Button 

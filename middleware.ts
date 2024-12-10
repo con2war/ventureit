@@ -2,16 +2,30 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Add CORS headers
-  const response = NextResponse.next()
-  
-  response.headers.set('Access-Control-Allow-Origin', '*')
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  
-  return response
+  const adminToken = request.cookies.get('admin-token')
+  const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
+  const isLoginPage = request.nextUrl.pathname === '/admin/login'
+
+  // Allow access to login page if not authenticated
+  if (isLoginPage && !adminToken) {
+    return NextResponse.next()
+  }
+
+  // Redirect to login if accessing admin routes without auth
+  if (isAdminRoute && !adminToken) {
+    return NextResponse.redirect(new URL('/admin/login', request.url))
+  }
+
+  // Redirect to admin dashboard if accessing login page while authenticated
+  if (isLoginPage && adminToken) {
+    return NextResponse.redirect(new URL('/admin/blog/manage', request.url))
+  }
+
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: '/api/:path*',
+  matcher: [
+    '/admin/:path*',
+  ]
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
+import { LogoutButton } from "@/components/logout-button"
 import { formatDate } from '@/lib/utils'
 import { Pencil, Trash2, Plus } from 'lucide-react'
 import type { BlogPost } from '@/types/blog'
@@ -54,12 +55,15 @@ export default function ManageBlogPosts() {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-white">Manage Blog Posts</h1>
-          <Button asChild className="bg-[#5ce1e6] hover:bg-[#5ce1e6]/90 text-black">
-            <Link href="/admin/blog">
-              <Plus className="w-4 h-4 mr-2" />
-              New Post
-            </Link>
-          </Button>
+          <div className="flex items-center space-x-4">
+            <Button asChild className="bg-[#5ce1e6] hover:bg-[#5ce1e6]/90 text-black">
+              <Link href="/admin/blog">
+                <Plus className="w-4 h-4 mr-2" />
+                New Post
+              </Link>
+            </Button>
+            <LogoutButton />
+          </div>
         </div>
 
         {posts.length === 0 ? (
