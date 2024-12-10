@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
 import { cookies } from 'next/headers'
 
-export const maxDuration = 300
+export const maxDuration = 60
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 
@@ -101,14 +101,12 @@ export async function POST(request: Request) {
     })
 
   } catch (error) {
-    // Log the full error details
     console.error('Blog post creation error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
       timestamp: new Date().toISOString(),
       env: {
         hasDbUrl: !!process.env.DATABASE_URL,
-        hasDirectUrl: !!process.env.DIRECT_URL,
         nodeEnv: process.env.NODE_ENV
       }
     })
