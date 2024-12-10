@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
+import { cookies } from 'next/headers'
 
+export const maxDuration = 300
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 
@@ -55,10 +57,19 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    // Log the start of the request
-    console.log('Starting blog post creation...')
+    // Validate admin authentication
+    const cookieStore = cookies()
+    const adminToken = cookieStore.get('admin-token')
+    const adminSecret = process.env.ADMIN_SECRET
 
-    // Validate request body
+    if (!adminToken || adminToken.value !== adminSecret) {
+      return NextResponse.json(
+        { error: 'Unauthorized access' },
+        { status: 401 }
+      )
+    }
+
+    // Parse request body
     const body = await request.json()
     const { title, content, imageUrl } = body
 
@@ -69,66 +80,42 @@ export async function POST(request: Request) {
       )
     }
 
-    // Log the data being processed
-    console.log('Processing blog post data:', {
-      title,
-      slug: slugify(title),
-      contentLength: content.length,
-      hasImage: !!imageUrl
-    })
+    // Generate slug
+    const slug = slugify(title)
 
-    // Verify Prisma connection
-    await prisma.$connect()
-    console.log('Prisma connection established')
-
-    // Create the post
+    // Create the post using the existing prisma instance
     const post = await prisma.blogPost.create({
       data: {
         title,
-        slug: slugify(title),
+        slug,
         content,
         imageUrl: imageUrl || null,
       },
     })
-    
-    console.log('Blog post created successfully:', post.id)
-    
-    return NextResponse.json({
-      success: true,
-      post
-    })
-  } catch (error) {
-    // Detailed error logging
-    console.error('Blog post creation error:', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      timestamp: new Date().toISOString()
+
+    return NextResponse.json({ success: true, post }, { 
+      status: 201,
+      headers: {
+        'Content-Type': 'application/json',
+      }
     })
 
-    // Check for specific error types
-    if (error instanceof Error) {
-      if (error.message.includes('Prisma')) {
-        return NextResponse.json(
-          { error: 'Database connection error. Please try again.' },
-          { status: 500 }
-        )
+  } catch (error) {
+    // Log the full error details
+    console.error('Blog post creation error:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString(),
+      env: {
+        hasDbUrl: !!process.env.DATABASE_URL,
+        hasDirectUrl: !!process.env.DIRECT_URL,
+        nodeEnv: process.env.NODE_ENV
       }
-      if (error.message.includes('unique constraint')) {
-        return NextResponse.json(
-          { error: 'A post with this title already exists.' },
-          { status: 400 }
-        )
-      }
-    }
+    })
 
     return NextResponse.json(
-      { error: 'Failed to create blog post. Please try again later.' },
+      { error: 'Failed to create blog post. Please try again.' },
       { status: 500 }
     )
-  } finally {
-    // Always disconnect Prisma in production
-    if (process.env.NODE_ENV === 'production') {
-      await prisma.$disconnect()
-    }
   }
 } 
