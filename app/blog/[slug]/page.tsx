@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
           
           <div 
-            className="prose prose-invert max-w-none"
+            className="text-white mb-4"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </article>
@@ -96,18 +96,6 @@ export default async function BlogPostPage({ params }: PageProps) {
   )
 }
 
-// Generate static params for static site generation
-export async function generateStaticParams() {
-  try {
-    const posts = await prisma.blogPost.findMany({
-      select: { slug: true }
-    })
-    
-    return posts.map((post: { slug: string }) => ({
-      slug: post.slug
-    }))
-  } catch (error) {
-    console.error('Error generating static params:', error)
-    return []
-  }
-} 
+// Add dynamic configuration
+export const dynamic = 'force-dynamic'
+export const revalidate = 0 
