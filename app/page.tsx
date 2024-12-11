@@ -5,6 +5,10 @@ import { Testimonials } from '@/components/testimonials'
 import { ContactForm } from '@/components/contact-form'
 import { Footer } from '@/components/footer'
 import { BlogPostsList } from '@/components/blog-posts-list'
+import { Suspense } from 'react'
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function Home() {
   return (
@@ -14,8 +18,9 @@ export default async function Home() {
         <Hero />
         <Services />
         <Testimonials />
-            {/* @ts-expect-error Async Server Component */}
-            <BlogPostsList />
+        <Suspense fallback={<div>Loading...</div>}>
+          <BlogPostsList />
+        </Suspense>
         <section id="contact" className="bg-black py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-lg mx-auto">

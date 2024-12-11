@@ -27,7 +27,6 @@ export function ByteByByte({ posts }: ByteByByteProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="lg:text-center"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
@@ -50,7 +49,7 @@ export function ByteByByte({ posts }: ByteByByteProps) {
                           />
                         </div>
                       )}
-                      <h3 className="text-xl font-medium text-white mb-2">{post.title}</h3>
+                      <h3 className="text-xl font-medium text-white mb-2 text-left">{post.title}</h3>
                       <div className="flex items-center justify-between mb-4">
                         <p className="text-sm text-gray-400">
                           {formatDate(post.createdAt)}
@@ -67,7 +66,7 @@ export function ByteByByte({ posts }: ByteByByteProps) {
                         </div>
                       </div>
                       <div 
-                        className="text-gray-300 line-clamp-2 mb-4 text-sm"
+                        className="text-gray-300 line-clamp-2 mb-4 text-sm text-left"
                         dangerouslySetInnerHTML={{ 
                           __html: post.content.substring(0, 150) + '...'
                         }}

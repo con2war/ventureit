@@ -2,68 +2,41 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'nodejs'
-
-type VoteType = 'upvote' | 'downvote'
-
-interface VoteRequest {
-  type: VoteType
-}
+export const revalidate = 0
 
 export async function POST(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  if (!params.id) {
-    return NextResponse.json(
-      { error: 'Post ID is required' },
-      { status: 400 }
-    )
-  }
-
   try {
-    const body = await request.json() as VoteRequest
-    const { type } = body
+    const { id } = params
+    const { type } = await request.json()
 
-    if (!type || (type !== 'upvote' && type !== 'downvote')) {
+    if (!['upvote', 'downvote'].includes(type)) {
       return NextResponse.json(
         { error: 'Invalid vote type' },
         { status: 400 }
       )
     }
 
-    const post = await prisma.blogPost.findUnique({
-      where: {
-        id: params.id
-      }
-    })
+    const updateData = type === 'upvote'
+      ? { upvotes: { increment: 1 } }
+      : { downvotes: { increment: 1 } }
 
-    if (!post) {
-      return NextResponse.json(
-        { error: 'Post not found' },
-        { status: 404 }
-      )
-    }
-
-    const updatedPost = await prisma.blogPost.update({
-      where: {
-        id: params.id
-      },
-      data: {
-        [type === 'upvote' ? 'upvotes' : 'downvotes']: {
-          increment: 1
-        }
-      }
+    const post = await prisma.blogPost.update({
+      where: { id },
+      data: updateData,
     })
 
     return NextResponse.json({
-      success: true,
-      post: updatedPost
+      upvotes: post.upvotes,
+      downvotes: post.downvotes
     })
+
   } catch (error) {
     console.error('Vote error:', error)
     return NextResponse.json(
-      { error: 'Failed to process vote' },
+      { error: 'Failed to update vote' },
       { status: 500 }
     )
   }

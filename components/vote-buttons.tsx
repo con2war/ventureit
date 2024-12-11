@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Button } from './ui/button'
+import { useState } from 'react'
 import { ThumbsUp, ThumbsDown } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -11,84 +10,60 @@ interface VoteButtonsProps {
   initialDownvotes: number
 }
 
-export function VoteButtons({ postId, initialUpvotes, initialDownvotes }: VoteButtonsProps) {
+export function VoteButtons({ postId, initialUpvotes = 0, initialDownvotes = 0 }: VoteButtonsProps) {
   const [upvotes, setUpvotes] = useState(initialUpvotes)
   const [downvotes, setDownvotes] = useState(initialDownvotes)
-  const [userVote, setUserVote] = useState<'up' | 'down' | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isVoting, setIsVoting] = useState(false)
 
-  const handleVote = async (type: 'up' | 'down') => {
-    if (userVote || isLoading) return
-
-    setIsLoading(true)
+  const handleVote = async (type: 'upvote' | 'downvote') => {
+    if (isVoting) return
+    
+    setIsVoting(true)
     try {
       const res = await fetch(`/api/blog/${postId}/vote`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ type }),
       })
 
-      if (!res.ok) throw new Error('Failed to vote')
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.message || 'Failed to vote')
+      }
 
-      if (type === 'up') {
-        setUpvotes(prev => prev + 1)
-      } else {
-        setDownvotes(prev => prev + 1)
-      }
-      setUserVote(type)
+      const data = await res.json()
+      setUpvotes(data.upvotes)
+      setDownvotes(data.downvotes)
       
-      // Store vote in localStorage to persist across page refreshes
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(`vote-${postId}`, type)
-      }
-      
-    } catch (error) {
-      console.error('Vote error:', error)
-      toast.error('Failed to submit vote. Please try again.')
+      toast.success(`Successfully ${type}d the post`)
+    } catch (err) {
+      console.error('Vote error:', err)
+      toast.error('Failed to vote. Please try again.')
     } finally {
-      setIsLoading(false)
+      setIsVoting(false)
     }
   }
 
-  // Check for existing vote on mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const existingVote = localStorage.getItem(`vote-${postId}`) as 'up' | 'down' | null
-      if (existingVote) {
-        setUserVote(existingVote)
-      }
-    }
-  }, [postId])
-
   return (
-    <div className="flex items-center space-x-4 bg-white/5 rounded-lg p-2">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => handleVote('up')}
-        disabled={isLoading || userVote !== null}
-        className={`flex items-center space-x-2 text-white 
-          ${userVote === 'up' ? 'text-green-500' : ''} 
-          ${!userVote ? 'hover:text-green-500 hover:bg-green-500/10' : ''}`}
+    <div className="flex items-center space-x-4">
+      <button
+        onClick={() => handleVote('upvote')}
+        disabled={isVoting}
+        className="flex items-center space-x-1 text-gray-400 hover:text-[#5ce1e6] transition-colors disabled:opacity-50"
       >
         <ThumbsUp className="h-5 w-5" />
-        <span className="text-sm font-medium">{upvotes}</span>
-      </Button>
-
-      <div className="h-8 w-px bg-white/10" />
-
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => handleVote('down')}
-        disabled={isLoading || userVote !== null}
-        className={`flex items-center space-x-2 text-white
-          ${userVote === 'down' ? 'text-red-500' : ''} 
-          ${!userVote ? 'hover:text-red-500 hover:bg-red-500/10' : ''}`}
+        <span>{upvotes}</span>
+      </button>
+      <button
+        onClick={() => handleVote('downvote')}
+        disabled={isVoting}
+        className="flex items-center space-x-1 text-gray-400 hover:text-[#5ce1e6] transition-colors disabled:opacity-50"
       >
         <ThumbsDown className="h-5 w-5" />
-        <span className="text-sm font-medium">{downvotes}</span>
-      </Button>
+        <span>{downvotes}</span>
+      </button>
     </div>
   )
 } 
