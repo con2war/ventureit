@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { Header } from '@/components/header'
-import { BlogGrid } from '@/components/blog-grid'
+import { BlogGrid } from '../components/blog-grid'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0

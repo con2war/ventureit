@@ -2,43 +2,46 @@ import { Header } from '@/components/header'
 import { Hero } from '@/components/hero'
 import { Services } from '@/components/services'
 import { Testimonials } from '@/components/testimonials'
-import { ContactForm } from '@/components/contact-form'
-import { Footer } from '@/components/footer'
 import { BlogPostsList } from '@/components/blog-posts-list'
+import { ContactForm } from '@/components/contact-form'
 import { Suspense } from 'react'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export default async function Home() {
+export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <>
       <Header />
-      <main className="flex-grow">
+      <main>
         <Hero />
         <Services />
         <Testimonials />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={
+          <div className="bg-black py-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              Loading posts...
+            </div>
+          </div>
+        }>
+          {/* @ts-expect-error Async Server Component */}
           <BlogPostsList />
         </Suspense>
         <section id="contact" className="bg-black py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-lg mx-auto">
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl text-center">
-                Contact Us
-              </h2>
-              <p className="mt-4 text-lg text-gray-300 text-center">
-                Ready to transform your business? Get in touch with us today.
+            <div className="lg:text-center mb-12">
+              <h1 className="mt-2 text-4xl leading-8 font-extrabold tracking-tight text-white sm:text-5xl">
+                Get In Touch
+              </h1>
+              <p className="mt-4 max-w-2xl text-xl text-gray-300 lg:mx-auto">
+                Have a project in mind? Let's discuss how we can help bring your ideas to life.
               </p>
-              <div className="mt-8">
-                <ContactForm />
-              </div>
             </div>
+            <ContactForm />
           </div>
         </section>
       </main>
-      <Footer />
-    </div>
+    </>
   )
 }
 

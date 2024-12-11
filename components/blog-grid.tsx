@@ -11,9 +11,12 @@ export function BlogGrid({ posts }: BlogGridProps) {
   return (
     <div>
       <div className="lg:text-center mb-12">
-        <h1 className="mt-2 text-4xl leading-8 font-extrabold tracking-tight text-white sm:text-5xl">
-          Bit by Bit
-        </h1>
+        <h2 className="text-xl text-[#5ce1e6] font-semibold tracking-wide uppercase">
+          Blog
+        </h2>
+        <p className="mt-2 text-4xl leading-8 font-extrabold tracking-tight text-white sm:text-5xl">
+          Byte by Byte
+        </p>
         <p className="mt-4 max-w-2xl text-xl text-gray-300 lg:mx-auto">
           Stay updated with our latest insights and developments in tech
         </p>
