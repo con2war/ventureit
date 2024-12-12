@@ -7,6 +7,16 @@ const nextConfig = {
     }
     return config
   },
+  images: {
+    domains: [
+      '34ui3vqlhxrdl0zd.public.blob.vercel-storage.com',
+      'images.unsplash.com',
+      'plus.unsplash.com'
+    ],
+  },
+  experimental: {
+    serverActions: true,
+  },
 }
 
 module.exports = nextConfig

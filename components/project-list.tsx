@@ -2,7 +2,6 @@
 
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -58,12 +57,11 @@ export function ProjectList() {
         >
           <Card className="bg-white/5 border-[#5ce1e6]/20 overflow-hidden group hover:border-[#5ce1e6]/40 transition-colors">
             <div className="relative">
-              <Image
+              <img
                 src={project.image}
                 alt={project.name}
-                width={300}
-                height={200}
                 className="w-full h-48 object-cover transition-transform group-hover:scale-105"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>

@@ -1,19 +1,17 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-
-export const dynamic = 'force-dynamic'
+import { cookies } from 'next/headers'
+import { verifyToken } from '@/lib/jwt'
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
-  if (!params.id) {
-    return NextResponse.json({ error: 'Post ID is required' }, { status: 400 })
-  }
-
   try {
     const post = await prisma.blogPost.findUnique({
-      where: { id: params.id }
+      where: {
+        id: params.id
+      }
     })
 
     if (!post) {
@@ -22,39 +20,62 @@ export async function GET(
 
     return NextResponse.json(post)
   } catch (error) {
-    console.error('Error:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error('Error fetching post:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch post' },
+      { status: 500 }
+    )
   }
 }
 
-export async function PATCH(
+export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  if (!params.id) {
-    return NextResponse.json({ error: 'Post ID is required' }, { status: 400 })
-  }
-
   try {
-    const { type } = await request.json()
-    
-    if (type !== 'upvote' && type !== 'downvote') {
-      return NextResponse.json({ error: 'Invalid vote type' }, { status: 400 })
+    // Verify admin token
+    const cookieStore = cookies()
+    const adminToken = cookieStore.get('admin-token')
+
+    if (!adminToken) {
+      return NextResponse.json({ error: 'No token found' }, { status: 401 })
     }
 
-    const updateData = type === 'upvote' 
-      ? { upvotes: { increment: 1 } }
-      : { downvotes: { increment: 1 } }
+    const verified = await verifyToken(adminToken.value)
+    if (!verified) {
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
+    }
 
-    const post = await prisma.blogPost.update({
-      where: { id: params.id },
-      data: updateData
+    const body = await request.json()
+    const { title, content, imageUrl } = body
+
+    // Create new slug if title changed
+    const slug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '')
+
+    // Update the blog post
+    const updatedPost = await prisma.blogPost.update({
+      where: {
+        id: params.id
+      },
+      data: {
+        title,
+        content,
+        slug,
+        imageUrl: imageUrl || null,
+        updatedAt: new Date()
+      }
     })
 
-    return NextResponse.json(post)
+    return NextResponse.json(updatedPost)
   } catch (error) {
-    console.error('Error:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error('Error updating post:', error)
+    return NextResponse.json(
+      { error: 'Failed to update post' },
+      { status: 500 }
+    )
   }
 }
 
@@ -63,13 +84,26 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const post = await prisma.blogPost.delete({
+    // Verify admin token
+    const cookieStore = cookies()
+    const adminToken = cookieStore.get('admin-token')
+
+    if (!adminToken) {
+      return NextResponse.json({ error: 'No token found' }, { status: 401 })
+    }
+
+    const verified = await verifyToken(adminToken.value)
+    if (!verified) {
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
+    }
+
+    await prisma.blogPost.delete({
       where: {
         id: params.id
       }
     })
 
-    return NextResponse.json(post)
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting post:', error)
     return NextResponse.json(

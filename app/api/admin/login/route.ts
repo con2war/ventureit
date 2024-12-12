@@ -1,50 +1,37 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { type ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
+import { signToken } from '@/lib/jwt'
 
-export const dynamic = 'force-dynamic'
-export const runtime = 'nodejs'
-
-interface LoginRequest {
-  password: string
-}
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json() as LoginRequest
-    const { password } = body
-    const adminSecret = process.env.ADMIN_SECRET
+    const { password } = await request.json()
 
-    if (!adminSecret) {
-      return NextResponse.json(
-        { error: 'Server configuration error' },
-        { status: 500 }
-      )
+    if (password === process.env.ADMIN_PASSWORD) {
+      // Create a proper JWT token
+      const token = await signToken({ 
+        role: 'admin'
+      })
+
+      // Set the token in cookies
+      cookies().set('admin-token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24, // 24 hours
+        path: '/',
+      })
+
+      return NextResponse.json({ success: true })
     }
 
-    if (password !== adminSecret) {
-      return NextResponse.json(
-        { error: 'Invalid password' },
-        { status: 401 }
-      )
-    }
-
-    const cookieStore = cookies()
-    const cookieOptions: Partial<ResponseCookie> = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-    }
-
-    cookieStore.set('admin-token', String(adminSecret), cookieOptions)
-
-    return NextResponse.json({ success: true })
+    return NextResponse.json(
+      { error: 'Invalid password' },
+      { status: 401 }
+    )
   } catch (error) {
     console.error('Login error:', error)
     return NextResponse.json(
-      { error: 'Failed to login' },
+      { error: 'Internal server error' },
       { status: 500 }
     )
   }

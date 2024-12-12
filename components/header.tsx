@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Menu } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -60,13 +59,14 @@ export function Header() {
         <div className="flex justify-between items-center py-6">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/" className="flex items-center">
-              <Image
+              <img
                 src="/images/venture_logo.png"
                 alt="Venture IT Solutions"
-                width={220}
-                height={60}
                 className="h-16 w-auto"
-                priority
+                style={{ 
+                  objectFit: 'contain',
+                  aspectRatio: '220/60'
+                }}
               />
             </Link>
           </div>

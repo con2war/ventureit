@@ -1,43 +1,41 @@
 import { NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
-import { nanoid } from 'nanoid'
-
-export const dynamic = 'force-dynamic'
-export const runtime = 'nodejs'
 
 export async function POST(req: Request) {
   try {
-    const form = await req.formData()
-    const file = form.get('file') as File
+    const formData = await req.formData()
+    const file = formData.get('image') as File
     
     if (!file) {
-      return NextResponse.json(
-        { error: 'No file provided' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'No image provided' }, { status: 400 })
     }
 
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: 'Invalid file type' },
+        { error: 'Invalid file type. Only JPG, PNG, GIF, and WebP are allowed.' },
         { status: 400 }
       )
     }
 
-    // Generate unique filename
-    const ext = file.name.split('.').pop()
-    const filename = `${nanoid()}.${ext}`
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      return NextResponse.json(
+        { error: 'File size too large. Maximum size is 5MB.' },
+        { status: 400 }
+      )
+    }
 
     // Upload to Vercel Blob
-    const blob = await put(filename, file, {
+    const blob = await put(file.name, file, {
       access: 'public',
+      addRandomSuffix: true // Adds a random suffix to prevent naming conflicts
     })
 
     return NextResponse.json({ url: blob.url })
   } catch (error) {
-    console.error('Upload error:', error)
+    console.error('Error in image upload:', error)
     return NextResponse.json(
       { error: 'Upload failed' },
       { status: 500 }
@@ -45,6 +43,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function OPTIONS() {
+// Optionally handle OPTIONS requests for CORS preflight
+export async function OPTIONS(req: Request) {
   return NextResponse.json({}, { status: 200 })
 } 

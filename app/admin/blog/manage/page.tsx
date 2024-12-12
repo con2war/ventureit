@@ -57,7 +57,7 @@ export default function ManageBlogPosts() {
           <h1 className="text-3xl font-bold text-white">Manage Blog Posts</h1>
           <div className="flex items-center space-x-4">
             <Button asChild className="bg-[#5ce1e6] hover:bg-[#5ce1e6]/90 text-black">
-              <Link href="/admin/blog">
+              <Link href="/admin/blog/new">
                 <Plus className="w-4 h-4 mr-2" />
                 New Post
               </Link>
@@ -98,7 +98,7 @@ export default function ManageBlogPosts() {
                     asChild
                     variant="outline"
                     size="icon"
-                    className="hover:bg-white/10"
+                    className="bg-white"
                   >
                     <Link href={`/admin/blog/edit/${post.id}`}>
                       <Pencil className="w-4 h-4" />
@@ -107,7 +107,7 @@ export default function ManageBlogPosts() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="hover:bg-red-500/20 hover:text-red-500"
+                    className="bg-white hover:bg-red-500/20 hover:text-red-500"
                     onClick={() => handleDelete(post.id)}
                   >
                     <Trash2 className="w-4 h-4" />
