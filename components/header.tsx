@@ -54,6 +54,11 @@ export function Header() {
     return 'text-black'
   }
 
+  const getMobileTextColor = () => {
+    if (theme === 'dark') return 'text-white'
+    return 'text-black'
+  }
+
   const getLogo = () => {
     if (theme === 'dark') return "/images/venture_logo.png"
     if (isHomePage && !isScrolled) return "/images/venture_logo.png"
@@ -81,6 +86,32 @@ export function Header() {
         News
       </button>
       <div className={getTextColor()}>
+        <ThemeToggle />
+      </div>
+    </>
+  )
+
+  const MobileNavItems = () => (
+    <>
+      <button onClick={() => handleNavigation('/')} className={`text-left text-lg font-medium ${getMobileTextColor()} hover:text-[#5ce1e6] transition-colors`}>
+        Web Development
+      </button>
+      <button onClick={() => handleNavigation('/projects')} className={`text-left text-lg font-medium ${getMobileTextColor()} hover:text-[#5ce1e6] transition-colors`}>
+        Our Work
+      </button>
+      <button onClick={() => handleNavigation('/#services')} className={`text-left text-lg font-medium ${getMobileTextColor()} hover:text-[#5ce1e6] transition-colors`}>
+        Development Services
+      </button>
+      <button onClick={() => handleNavigation('/estimator')} className={`text-left text-lg font-medium ${getMobileTextColor()} hover:text-[#5ce1e6] transition-colors`}>
+        Project Calculator
+      </button>
+      <button onClick={() => handleNavigation('/#contact')} className={`text-left text-lg font-medium ${getMobileTextColor()} hover:text-[#5ce1e6] transition-colors`}>
+        Contact Us
+      </button>
+      <button onClick={() => handleNavigation('/blog')} className={`text-left text-lg font-medium ${getMobileTextColor()} hover:text-[#5ce1e6] transition-colors`}>
+        News
+      </button>
+      <div className={getMobileTextColor()}>
         <ThemeToggle />
       </div>
     </>
@@ -121,7 +152,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right" className={theme === 'dark' ? "w-[300px] sm:w-[400px] bg-black" : "w-[300px] sm:w-[400px] bg-white"}>
                 <nav className="flex flex-col space-y-4 mt-8">
-                  <NavItems />
+                  <MobileNavItems />
                 </nav>
               </SheetContent>
             </Sheet>
