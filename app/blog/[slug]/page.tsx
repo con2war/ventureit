@@ -5,6 +5,7 @@ import { formatDate } from '@/lib/utils'
 import { VoteButtons } from '@/components/vote-buttons'
 import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 async function getPost(slug: string) {
   try {
@@ -32,20 +33,21 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   )
 
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen flex flex-col bg-background">
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back Button */}
         <Link 
           href="/blog" 
-          className="inline-flex items-center text-white hover:text-[#5ce1e6] mb-8 transition-colors"
+          className="inline-flex items-center hover:text-[#5ce1e6] mb-8 transition-colors"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
           Back
         </Link>
+        <ThemeToggle />
 
         {/* Post Header */}
         <div className="mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold mb-4">
             {post.title}
           </h1>
           <div className="flex items-center justify-between">
@@ -62,14 +64,14 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
         {/* Post Content */}
         <div 
-          className="prose max-w-none text-white
-            [&_p]:text-white [&_p]:text-lg [&_p]:leading-relaxed
-            [&_h1]:text-white [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:mb-8
-            [&_h2]:text-white [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:mb-6
-            [&_h3]:text-white [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:mb-4
-            [&_ul]:text-white [&_ul]:list-disc [&_ul]:ml-4
-            [&_ol]:text-white [&_ol]:list-decimal [&_ol]:ml-4
-            [&_li]:text-white [&_li]:mb-2
+          className="text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto  
+            [&_p]:text-lg [&_p]:leading-relaxed
+            [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:mb-8
+            [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:mb-6
+            [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:mb-4
+            [&_ul]:list-disc [&_ul]:ml-4
+            [&_ol]:list-decimal [&_ol]:ml-4
+            [&_li]:mb-2
             [&_a]:text-[#5ce1e6] [&_a]:underline
             [&_img]:rounded-lg [&_img]:my-8"
           dangerouslySetInnerHTML={{ __html: sanitizedContent }}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -12,8 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
 import { useToast } from "@/components/ui/use-toast"
+import { Card, CardContent } from "@/components/ui/card"
 
 export function ContactForm() {
   const { toast } = useToast()
@@ -24,6 +25,11 @@ export function ContactForm() {
     phone: '',
     enquiryType: '',
     message: ''
+  })
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
   })
 
   const enquiryTypes = [
@@ -81,79 +87,85 @@ export function ContactForm() {
   }
 
   return (
-    <motion.form
+    <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
-      onSubmit={handleSubmit}
-      className="space-y-6"
     >
-      <div>
-        <Input
-          placeholder="Name"
-          required
-          className="bg-white/10 border-[#5ce1e6]/20 text-white"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-      </div>
-      <div>
-        <Input
-          type="email"
-          placeholder="Email"
-          required
-          className="bg-white/10 border-[#5ce1e6]/20 text-white"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-        />
-      </div>
-      <div>
-        <Input
-          type="tel"
-          placeholder="Phone Number"
-          required
-          className="bg-white/10 border-[#5ce1e6]/20 text-white"
-          value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-        />
-      </div>
-      <div>
-        <Select 
-          value={formData.enquiryType}
-          onValueChange={(value) => setFormData({ ...formData, enquiryType: value })}
-        >
-          <SelectTrigger className="bg-white/10 border-[#5ce1e6]/20 text-white">
-            <SelectValue placeholder="Select Enquiry Type" />
-          </SelectTrigger>
-          <SelectContent className="bg-black border-[#5ce1e6]/20">
-            {enquiryTypes.map((type) => (
-              <SelectItem 
-                key={type.value} 
-                value={type.value}
-                className="text-white hover:bg-white/10 focus:bg-white/10 focus:text-white"
+      <Card className="bg-card hover:bg-card/90 transition-colors">
+        <CardContent className="p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <Input
+                placeholder="Name"
+                required
+                className="bg-background text-foreground border-input"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+            </div>
+            <div>
+              <Input
+                type="email"
+                placeholder="Email"
+                required
+                className="bg-background text-foreground border-input"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+            <div>
+              <Input
+                type="tel"
+                placeholder="Phone Number"
+                required
+                className="bg-background text-foreground border-input"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </div>
+            <div>
+              <Select 
+                value={formData.enquiryType}
+                onValueChange={(value) => setFormData({ ...formData, enquiryType: value })}
               >
-                {type.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div>
-        <Textarea
-          placeholder="Message"
-          required
-          className="bg-white/10 border-[#5ce1e6]/20 text-white min-h-[120px]"
-          value={formData.message}
-          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-        />
-      </div>
-      <Button 
-        type="submit" 
-        className="w-full bg-[#ff5757] hover:bg-[#ff5757]/90"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Sending...' : 'Send Message'}
-      </Button>
-    </motion.form>
+                <SelectTrigger className="bg-background text-foreground border-input">
+                  <SelectValue placeholder="Select Enquiry Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border-input">
+                  {enquiryTypes.map((type) => (
+                    <SelectItem 
+                      key={type.value} 
+                      value={type.value}
+                      className="text-foreground hover:bg-accent hover:text-accent-foreground"
+                    >
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Textarea
+                placeholder="Message"
+                required
+                className="bg-background text-foreground border-input min-h-[120px]"
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              />
+            </div>
+            <Button 
+              type="submit" 
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </motion.div>
   )
 }
+

@@ -45,7 +45,6 @@ export function ProjectEstimator() {
     const [error, setError] = useState('')
 
     const handleNextStep = () => {
-        // Add verification for step 1
         if (step === 1 && !websiteType) {
             setError('Please select a website type to continue')
             return
@@ -94,8 +93,8 @@ export function ProjectEstimator() {
 
     const calculateTotalCost = () => {
         const basePrice = websiteTypes.find(type => type.id === websiteType)?.basePrice || 0
-        const pagesCost = (pages - 1) * 100 // Assuming each additional page costs $100
-        const featuresCost = Object.values(features).filter(Boolean).length * 200 // Assuming each feature costs $200
+        const pagesCost = (pages - 1) * 100
+        const featuresCost = Object.values(features).filter(Boolean).length * 200
         const additionalFeaturesCost = selectedAdditionalFeatures.reduce((total, featureId) => {
             const feature = additionalFeatures.find(f => f.id === featureId)
             return total + (feature?.price || 0)
@@ -108,22 +107,22 @@ export function ProjectEstimator() {
         switch (step) {
             case 1:
                 return (
-                    <Card className="bg-white/5 border-[#5ce1e6]/20">
+                    <Card className="bg-card border-border">
                         <CardContent className="p-6">
-                            <h2 className="text-2xl font-bold text-white mb-4">Step 1: Choose Website Type</h2>
+                            <h2 className="text-2xl font-bold text-foreground mb-4">Step 1: Choose Website Type</h2>
                             <RadioGroup value={websiteType} onValueChange={(value) => {
                                 setWebsiteType(value)
-                                setError('') // Clear error when user makes a selection
+                                setError('')
                             }}>
                                 {websiteTypes.map((type) => (
                                     <div key={type.id} className="flex items-center space-x-2 mb-2">
                                         <RadioGroupItem value={type.id} id={type.id} />
-                                        <Label htmlFor={type.id} className="text-white">{type.name}</Label>
+                                        <Label htmlFor={type.id} className="text-foreground">{type.name}</Label>
                                     </div>
                                 ))}
                             </RadioGroup>
                             {error && (
-                                <p className="mt-2 text-[#ff5757] text-sm">
+                                <p className="mt-2 text-destructive text-sm">
                                     {error}
                                 </p>
                             )}
@@ -132,21 +131,21 @@ export function ProjectEstimator() {
                 )
             case 2:
                 return (
-                    <Card className="bg-white/5 border-[#5ce1e6]/20">
+                    <Card className="bg-card border-border">
                         <CardContent className="p-6">
-                            <h2 className="text-2xl font-bold text-white mb-4">Step 2: Complexity</h2>
+                            <h2 className="text-2xl font-bold text-foreground mb-4">Step 2: Complexity</h2>
                             <div className="mb-4">
-                                <Label htmlFor="pages" className="text-white">Number of Pages</Label>
+                                <Label htmlFor="pages" className="text-foreground">Number of Pages</Label>
                                 <Input
                                     id="pages"
                                     type="number"
                                     min="1"
                                     value={pages}
                                     onChange={(e) => setPages(parseInt(e.target.value))}
-                                    className="bg-white/10 text-white"
+                                    className="bg-background text-foreground"
                                 />
                             </div>
-                            <h3 className="text-xl font-semibold text-white mb-2">Required Features</h3>
+                            <h3 className="text-xl font-semibold text-foreground mb-2">Required Features</h3>
                             {Object.entries(features).map(([key, value]) => (
                                 <div key={key} className="flex items-center space-x-2 mb-2">
                                     <Checkbox
@@ -154,7 +153,7 @@ export function ProjectEstimator() {
                                         checked={value}
                                         onCheckedChange={(checked) => setFeatures(prev => ({ ...prev, [key]: checked }))}
                                     />
-                                    <Label htmlFor={key} className="text-white">
+                                    <Label htmlFor={key} className="text-foreground">
                                         {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
                                     </Label>
                                 </div>
@@ -164,9 +163,9 @@ export function ProjectEstimator() {
                 )
             case 3:
                 return (
-                    <Card className="bg-white/5 border-[#5ce1e6]/20">
+                    <Card className="bg-card border-border">
                         <CardContent className="p-6">
-                            <h2 className="text-2xl font-bold text-white mb-4">Step 3: Additional Features</h2>
+                            <h2 className="text-2xl font-bold text-foreground mb-4">Step 3: Additional Features</h2>
                             {additionalFeatures.map((feature) => (
                                 <div key={feature.id} className="flex items-center space-x-2 mb-2">
                                     <Checkbox
@@ -180,7 +179,7 @@ export function ProjectEstimator() {
                                             }
                                         }}
                                     />
-                                    <Label htmlFor={feature.id} className="text-white">{feature.name}</Label>
+                                    <Label htmlFor={feature.id} className="text-foreground">{feature.name}</Label>
                                 </div>
                             ))}
                         </CardContent>
@@ -188,43 +187,43 @@ export function ProjectEstimator() {
                 )
             case 4:
                 return (
-                    <Card className="bg-white/5 border-[#5ce1e6]/20">
+                    <Card className="bg-card border-border">
                         <CardContent className="p-6">
-                            <h2 className="text-2xl font-bold text-white mb-4">Contact Information</h2>
+                            <h2 className="text-2xl font-bold text-foreground mb-4">Contact Information</h2>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
-                                    <Label htmlFor="name" className="text-white">Name</Label>
+                                    <Label htmlFor="name" className="text-foreground">Name</Label>
                                     <Input
                                         id="name"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         required
-                                        className="bg-white/10 text-white"
+                                        className="bg-background text-foreground"
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor="email" className="text-white">Email</Label>
+                                    <Label htmlFor="email" className="text-foreground">Email</Label>
                                     <Input
                                         id="email"
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
-                                        className="bg-white/10 text-white"
+                                        className="bg-background text-foreground"
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor="phone" className="text-white">Phone Number</Label>
+                                    <Label htmlFor="phone" className="text-foreground">Phone Number</Label>
                                     <Input
                                         id="phone"
                                         type="tel"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
                                         required
-                                        className="bg-white/10 text-white"
+                                        className="bg-background text-foreground"
                                     />
                                 </div>
-                                <Button type="submit" className="w-full bg-[#ff5757] hover:bg-[#ff5757]/90">
+                                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                                     Find out more
                                 </Button>
                             </form>
@@ -238,18 +237,18 @@ export function ProjectEstimator() {
 
     const renderQuote = () => {
         return (
-            <Card className="bg-white/5 border-[#5ce1e6]/20">
+            <Card className="bg-card border-border">
                 <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold text-white mb-4">Project Estimate Summary</h2>
-                    <div className="space-y-2 text-white">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Project Estimate Summary</h2>
+                    <div className="space-y-2 text-foreground">
                         <p><strong>Website Type:</strong> {websiteTypes.find(type => type.id === websiteType)?.name}</p>
                         <p><strong>Number of Pages:</strong> {pages}</p>
                         <p><strong>Features:</strong> {Object.entries(features).filter(([, value]) => value).map(([key]) => key).join(', ') || 'None'}</p>
                         <p><strong>Additional Features:</strong> {selectedAdditionalFeatures.map(id => additionalFeatures.find(f => f.id === id)?.name).join(', ') || 'None'}</p>
                         <p className="text-2xl font-bold mt-4">Estimated Total: £{calculateTotalCost()}</p>
                     </div>
-                    <p className="mt-4 text-sm text-gray-400">This is an estimate. Final pricing may vary based on specific project requirements.</p>
-                    <p className="mt-4 text-white">Thank you for your interest, {name}. We'll be in touch with you soon at {email} or {phone}.</p>
+                    <p className="mt-4 text-sm text-muted-foreground">This is an estimate. Final pricing may vary based on specific project requirements.</p>
+                    <p className="mt-4 text-foreground">Thank you for your interest, {name}. We'll be in touch with you soon at {email} or {phone}.</p>
                     <Button onClick={() => {
                         setShowQuote(false)
                         setStep(1)
@@ -260,7 +259,7 @@ export function ProjectEstimator() {
                         setName('')
                         setEmail('')
                         setPhone('')
-                    }} className="mt-6 w-full bg-[#5ce1e6] hover:bg-[#5ce1e6]/90 text-black">
+                    }} className="mt-6 w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                         Start New Estimate
                     </Button>
                 </CardContent>
@@ -285,7 +284,7 @@ export function ProjectEstimator() {
                     {step < 4 && (
                         <Button
                             onClick={handleNextStep}
-                            className="ml-auto bg-[#ff5757] hover:bg-[#ff5757]/90"
+                            className="ml-auto bg-primary hover:bg-primary/90 text-primary-foreground"
                         >
                             Next
                         </Button>
@@ -295,6 +294,8 @@ export function ProjectEstimator() {
         </motion.div>
     )
 }
+
+
 
 
 

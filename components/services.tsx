@@ -2,7 +2,7 @@
 
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
-import { Code, Globe, Server, Search, LineChart, Camera } from 'lucide-react'
+import { Code, Globe, Server, Search, LineChart } from 'lucide-react'
 import { Card, CardContent } from "@/components/ui/card"
 
 const services = [
@@ -31,11 +31,6 @@ const services = [
     description: 'Data-driven analytics and business intelligence solutions.',
     icon: LineChart,
   },
-  {
-    name: 'Photography and Logo Design',
-    description: 'Tailored logo design and photography solutions.',
-    icon: Camera,
-  },
 ]
 
 export function Services() {
@@ -45,7 +40,7 @@ export function Services() {
   })
 
   return (
-    <div id="services" className="bg-black py-24">
+    <div id="services" className="bg-background py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           ref={ref}
@@ -58,7 +53,7 @@ export function Services() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-[#5ce1e6] font-semibold tracking-wide uppercase"
+            className="text-xl text-primary font-semibold tracking-wide uppercase"
           >
             Services
           </motion.h2>
@@ -66,7 +61,7 @@ export function Services() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-2 text-4xl leading-8 font-extrabold tracking-tight text-white sm:text-5xl"
+            className="mt-2 text-4xl leading-8 font-extrabold tracking-tight text-foreground sm:text-5xl"
           >
             Comprehensive Tech Solutions
           </motion.p>
@@ -80,15 +75,15 @@ export function Services() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: index * 0.1 + 0.6 }}
               >
-                <Card className="bg-white/5 border-[#5ce1e6]/20 hover:border-[#5ce1e6]/40 transition-colors">
+                <Card className="bg-card hover:bg-card/90 transition-colors">
                   <CardContent className="p-6">
                     <div className="flex items-center space-x-4">
-                    <div className="flex items-center justify-center h-14 w-14 rounded-md bg-[#5ce1e6] text-white">
+                      <div className="flex items-center justify-center h-14 w-14 rounded-md bg-primary text-primary-foreground">
                         <service.icon className="h-8 w-8" aria-hidden="true" />
                       </div>
-                      <h3 className="text-xl font-medium text-white">{service.name}</h3>
+                      <h3 className="text-xl font-medium text-foreground">{service.name}</h3>
                     </div>
-                    <p className="mt-4 text-lg text-gray-300">{service.description}</p>
+                    <p className="mt-4 text-lg text-muted-foreground">{service.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -99,6 +94,8 @@ export function Services() {
     </div>
   )
 }
+
+
 
 
 
