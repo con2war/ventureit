@@ -10,10 +10,11 @@ export async function BlogPostsList() {
   })
 
   return (
-    <section className="bg-black py-24">
+    <section className="bg-background py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <BlogGrid posts={posts} />
       </div>
     </section>
   )
-} 
+}
+

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { CookieConsent } from "@/components/cookie-consent";
 import { structuredData } from './structured-data'
 import { NewsletterPopup } from '@/components/newsletter-popup'
+import { ThemeProvider } from "@/components/theme-provider"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -47,26 +48,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="geo.region" content="GB-NIR" />
-        <meta name="geo.placename" content="Belfast" />
-        <meta name="geo.position" content="54.597285;-5.93012" />
-        <meta name="ICBM" content="54.597285, -5.93012" />
-        <meta name="description" content="Professional web development services in Northern Ireland." />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} bg-black min-h-screen`}>
-        {children}
-        <Toaster />
-        <div id="cookie-consent-container">
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+          <Toaster />
           <CookieConsent />
-        </div>
-        <NewsletterPopup />
+        </ThemeProvider>
       </body>
     </html>
   )

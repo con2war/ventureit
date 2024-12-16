@@ -12,10 +12,10 @@ export function BlogGrid({ posts }: BlogGridProps) {
   return (
     <div>
       <div className="lg:text-center mb-12">
-        <h1 className="mt-2 text-4xl leading-8 font-extrabold tracking-tight text-white sm:text-5xl">
+        <h1 className="mt-2 text-4xl leading-8 font-extrabold tracking-tight sm:text-5xl">
           Bit by Bit
         </h1>
-        <p className="mt-4 max-w-2xl text-xl text-gray-300 lg:mx-auto">
+        <p className="mt-4 max-w-2xl text-xl lg:mx-auto">
           Stay updated with our latest insights and developments in tech
         </p>
       </div>
@@ -39,14 +39,14 @@ export function BlogGrid({ posts }: BlogGridProps) {
                 </div>
               )}
               <div className="p-6 flex flex-col flex-grow">
-                <h2 className="text-xl font-bold text-white mb-2 group-hover:text-[#5ce1e6] transition">
+                <h2 className="text-xl font-bold mb-2 group-hover:text-[#5ce1e6] transition">
                   {post.title}
                 </h2>
-                <time className="text-sm text-gray-400 mb-4">
+                <time className="text-sm mb-4">
                   {formatDate(post.createdAt)}
                 </time>
                 <div 
-                  className="text-gray-300 mb-4 line-clamp-3 text-sm"
+                  className="mb-4 line-clamp-3 text-sm"
                   dangerouslySetInnerHTML={{ 
                     __html: post.content.substring(0, 150) + '...'
                   }}

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink } from 'lucide-react' // Import the external link icon
+import { ExternalLink } from 'lucide-react'
 
 const projects = [
   {
@@ -55,7 +55,7 @@ export function ProjectList() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: index * 0.1 }}
         >
-          <Card className="bg-white/5 border-[#5ce1e6]/20 overflow-hidden group hover:border-[#5ce1e6]/40 transition-colors">
+          <Card className="bg-card hover:bg-card/90 border-border overflow-hidden group transition-colors">
             <div className="relative">
               <img
                 src={project.image}
@@ -66,20 +66,20 @@ export function ProjectList() {
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <CardContent className="p-6">
-              <h3 className="text-2xl font-semibold text-white mb-2">{project.name}</h3>
-              <p className="text-[#5ce1e6] text-lg mb-4">{project.company}</p>
-              <p className="text-gray-300 text-lg mb-4">{project.description}</p>
+              <h3 className="text-2xl font-semibold text-foreground mb-2">{project.name}</h3>
+              <p className="text-primary text-lg mb-4">{project.company}</p>
+              <p className="text-muted-foreground text-lg mb-4">{project.description}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.tags.map((tag, tagIndex) => (
-                  <Badge key={tagIndex} variant="secondary" className="bg-[#ff5757] text-white text-sm">
+                  <Badge key={tagIndex} variant="secondary" className="bg-secondary text-secondary-foreground">
                     {tag}
                   </Badge>
                 ))}
               </div>
-              {project.url && (  // Only render button if URL exists
+              {project.url && (
                 <Button 
                   asChild
-                  className="w-full bg-[#5ce1e6] hover:bg-[#5ce1e6]/90 text-black transition-colors"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-colors"
                 >
                   <a 
                     href={project.url} 
@@ -99,3 +99,4 @@ export function ProjectList() {
     </div>
   )
 }
+
