@@ -25,17 +25,18 @@ const projects = [
     url: "https://keeranglenholidayrental.com"
   },
   {
+    name: "Portfolio Website with contact management",
+    company: "Darbell Stone",
+    description: "A portfolio website for a local stone company with a contact management system, focus was to increase enquiries and sales. We achieved this both in the contact form and a real focus on SEO",
+    image: "/images/portfolio_1.png?height=200&width=300",
+    tags: ["SEO", "Portfolio", "Contact Form"],
+    url: "https://darbellstone.com"
+  },
+  {
     name: "Logo Design and Photography",
     company: "Drone and Camera Photography",
     description: "Created company logo and photography for website and social media",
     image: "/images/dgn_park.jpg?height=200&width=3s00",
-    tags: ["SEO", "Content Marketing", "Analytics"],
-  },
-  {
-    name: "Channel Manager",
-    company: "p0rtals",
-    description: "A channel manager for Airbnb and Booking.com and many other channels to prevent double booking with a booking dashboard and payment processing",
-    image: "/images/p0rtals.png?height=200&width=300",
     tags: ["SEO", "Content Marketing", "Analytics"],
   }
 ]

@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
+  // Handle sitemap request
+  if (request.nextUrl.pathname === '/sitemap.xml') {
+    return NextResponse.rewrite(new URL('/api/sitemap', request.url))
+  }
+
+  // Handle admin routes
   const adminToken = request.cookies.get('admin-token')
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
   const isLoginPage = request.nextUrl.pathname === '/admin/login'
@@ -27,5 +33,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/admin/:path*',
+    '/sitemap.xml',
   ]
 }

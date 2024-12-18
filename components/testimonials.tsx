@@ -18,8 +18,8 @@ const testimonials = [
   },
   {
     quote: "Their SEO work significantly improved our search rankings. We've seen a notable increase in organic traffic.",
-    author: "Emily Brown",
-    company: "Source Business Solutions"
+    author: "Francis Bloomer",
+    company: "Darbell Stone"
   }
 ]
 
