@@ -3,10 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { CookieConsent } from "@/components/cookie-consent";
-import { structuredData } from './structured-data'
 import { NewsletterPopup } from '@/components/newsletter-popup'
 import { ThemeProvider } from "@/components/theme-provider"
-
+import { AhrefsAnalytics } from '@/components/ahrefs-analytics'
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -54,7 +53,9 @@ export default function RootLayout({
           {children}
           <Toaster />
           <CookieConsent />
+          <NewsletterPopup />
         </ThemeProvider>
+        <AhrefsAnalytics />
       </body>
     </html>
   )
