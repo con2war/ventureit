@@ -2,7 +2,7 @@ export const structuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Venture IT Solutions",
-  "description": "Professional web development and design services in Northern Ireland. Specializing in custom websites, e-commerce solutions, and web applications for businesses across Ireland and the UK.",
+  "description": "Professional web development services in Northern Ireland. Custom websites, e-commerce solutions, and web applications for businessses globally.",
   "url": "https://www.ventureitsolutions.co.uk",
   "logo": "https://www.ventureitsolutions.co.uk/images/venture_logo.png",
   "image": "https://www.ventureitsolutions.co.uk/images/venture_logo.png",

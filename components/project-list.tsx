@@ -6,13 +6,14 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ExternalLink } from 'lucide-react'
+import Image from 'next/image'
 
 const projects = [
   {
     name: "Channel Manager, booking dashboard and payment processing",
     company: "Craig View Luxury Glamping",
     description: "Logo design and website development for a luxury glamping site with payment processing. Bespoke channel manager for Airbnb and Booking.com integration with a booking dashboard and real time statistics",
-    image: "/images/sunnysidepod_g.jpg?height=200&width=300",
+    image: "/images/sunnysidepod_g.webp?height=200&width=300",
     tags: ["Web Development", "UI/UX Design", "SEO"],
     url: "https://craigviewluxuryglampingni.com"
   },
@@ -20,7 +21,7 @@ const projects = [
     name: "Long term rental holiday rental property management",
     company: "Keeran Glen Holiday Rentals",
     description: "Developed a website and app for a long term holiday rental property which also required logo creation and photography for the company",
-    image: "/images/K.png?height=200&width=300",
+    image: "/images/K.webp?height=200&width=300",
     tags: ["Web Development", "SEO", "Content Management"],
     url: "https://keeranglenholidayrental.com"
   },
@@ -58,16 +59,19 @@ export function ProjectList() {
         >
           <Card className="bg-card hover:bg-card/90 border-border overflow-hidden group transition-colors">
             <div className="relative">
-              <img
+              <Image
                 src={project.image}
                 alt={project.name}
                 className="w-full h-48 object-cover transition-transform group-hover:scale-105"
                 loading="lazy"
+                quality={75}
+                width={300}
+                height={200}
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <CardContent className="p-6">
-              <h3 className="text-2xl font-semibold text-foreground mb-2">{project.name}</h3>
+              <h2 className="text-2xl font-semibold text-foreground mb-2">{project.name}</h2>
               <p className="text-primary text-lg mb-4">{project.company}</p>
               <p className="text-muted-foreground text-lg mb-4">{project.description}</p>
               <div className="flex flex-wrap gap-2 mb-4">
