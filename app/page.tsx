@@ -6,6 +6,7 @@ import { BlogPostsList } from '@/components/blog-posts-list'
 import { ContactForm } from '@/components/contact-form'
 import { Suspense } from 'react'
 import { Footer } from '@/components/footer'
+import { HomeFAQ } from '@/components/home-faq'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -26,21 +27,8 @@ export default function Home() {
           <BlogPostsList />
         </Suspense>
         <Testimonials />
-        <section id="contact" className="bg-background py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-lg mx-auto">
-              <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl text-center">
-                Contact Us
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground text-center">
-                Ready to transform your business? Get in touch with us today.
-              </p>
-              <div className="mt-8">
-                <ContactForm />
-              </div>
-            </div>
-          </div>
-        </section>
+        <ContactForm />
+        <HomeFAQ />
       </main>
       <Footer />
     </div>

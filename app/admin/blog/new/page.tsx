@@ -9,6 +9,7 @@ import { RichTextEditor } from '@/components/rich-text-editor'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export default function CreateBlogPost() {
     const router = useRouter()
@@ -74,7 +75,7 @@ export default function CreateBlogPost() {
     }
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto px-4 py-8 bg-black">
             <div className="flex items-center justify-between mb-8">
                 <Link 
                     href="/admin/blog/manage" 

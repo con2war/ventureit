@@ -64,7 +64,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
         {/* Post Content */}
         <div 
-          className="text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto  
+          className="text-2xl mb-16 max-w-3xl mx-auto  
             [&_p]:text-lg [&_p]:leading-relaxed
             [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:mb-8
             [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:mb-6
