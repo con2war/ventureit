@@ -73,13 +73,13 @@ export default function ProjectsPage() {
           <FAQAccordion />
             <Link
               href="/#contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-medium rounded-md bg-primary hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-medium rounded-md transition-colors"
             >
               Contact Us
             </Link>
             <Link
               href="/estimator"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-medium rounded-md bg-primary hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-medium rounded-md transition-colors"
             >
               Get an Estimate
             </Link>
