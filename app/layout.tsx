@@ -22,9 +22,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Venture IT Solutions | Web Development Northern Ireland',
-  description: 'Professional web development and design services in Northern Ireland. Expert website developers in Belfast, Dublin & across Ireland. Custom web applications, e-commerce solutions & responsive design.',
-  keywords: 'web development northern ireland, website design belfast, web developer ireland, custom web applications ni, ecommerce websites ireland, responsive web design belfast, web development company ireland, website development ni, digital solutions northern ireland, web app development belfast',
+  title: 'Venture IT Solutions | Web Design Northern Ireland',
+  description: 'Professional web development services in Northern Ireland. Custom websites, e-commerce solutions, and web applications for businessses globally.',
+  keywords: 'web development northern ireland, web design belfast, web developer ni, web design ni, custom web design ni, ecommerce websites ireland, responsive web design belfast, web development company ireland, website development ni, digital solutions northern ireland, web development belfast',
   openGraph: {
     title: 'Venture IT Solutions | Web Development Northern Ireland',
     description: 'Professional web development and design services in Northern Ireland. Expert website developers in Belfast, Dublin & across Ireland.',

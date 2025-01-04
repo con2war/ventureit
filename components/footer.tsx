@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Instagram } from 'lucide-react'
+import { Instagram, Twitter, X } from 'lucide-react'
 
 export function Footer() {
   const [ref, inView] = useInView({
@@ -22,12 +22,20 @@ export function Footer() {
         >
           <div className="flex justify-center space-x-6 md:order-2">
             <a 
-              href="#" 
+              href="https://www.instagram.com/venture.it/" 
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="Instagram"
             >
               <span className="sr-only">Instagram</span>
               <Instagram className="h-6 w-6" />
+            </a>
+            <a 
+              href="https://x.com/_ventureit"  // Replace with your actual X profile URL
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="X (Twitter)"
+            >
+              <span className="sr-only">X (Twitter)</span>
+              <Twitter className="h-6 w-6" />
             </a>
           </div>
           <div className="mt-8 md:mt-0 md:order-1">
