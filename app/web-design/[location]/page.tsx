@@ -7,16 +7,7 @@ import { ContactForm } from '@/components/contact-form'
 import { HomeFAQ } from '@/components/home-faq'
 import { Footer } from '@/components/footer'
 import { Metadata } from 'next'
-
-// Define the locations you want to target
-export const locations = [
-  'belfast',
-  'derry',
-  'lisburn',
-  'newry',
-  'bangor',
-  'northern-ireland'
-]
+import { locations } from '@/config/locations'
 
 export async function generateStaticParams() {
   return locations.map((location) => ({
@@ -26,7 +17,7 @@ export async function generateStaticParams() {
 
 // Dynamic metadata for SEO
 export async function generateMetadata({ params }: { params: { location: string } }): Promise<Metadata> {
-  const location = params.location.replace('-', ' ')
+  const location = params.location.replace(/-/g, ' ')
   const capitalizedLocation = location.split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')

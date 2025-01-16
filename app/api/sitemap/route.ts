@@ -1,15 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
-
-// Define the locations you want to target
-const locations = [
-  'belfast',
-  'derry',
-  'lisburn',
-  'newry',
-  'bangor',
-  'northern-ireland'
-]
+import { locations } from '@/config/locations'
 
 export async function GET() {
   try {
@@ -49,7 +40,7 @@ export async function GET() {
       },
     ]
 
-    // Generate location pages
+    // Generate location pages using imported locations
     const locationPages = locations.map(location => ({
       loc: `https://www.ventureitsolutions.co.uk/web-design/${location}`,
       lastmod: new Date().toISOString().split('T')[0],
