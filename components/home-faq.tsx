@@ -96,7 +96,11 @@ const faqCategories = [
   }
 ]
 
-export function HomeFAQ() {
+interface HomeFAQProps {
+  location?: string;
+}
+
+export function HomeFAQ({ location }: HomeFAQProps) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

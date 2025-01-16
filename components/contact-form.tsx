@@ -16,7 +16,11 @@ import {
 import { useToast } from "@/components/ui/use-toast"
 import { Card, CardContent } from "@/components/ui/card"
 
-export function ContactForm() {
+interface ContactFormProps {
+  location?: string;
+}
+
+export function ContactForm({ location }: ContactFormProps) {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
@@ -91,7 +95,7 @@ export function ContactForm() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto">
           <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl text-center">
-            Contact Us
+            {location ? `Contact Us in ${location}` : 'Contact Us'}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground text-center">
             Ready to transform your business? Get in touch with us today.

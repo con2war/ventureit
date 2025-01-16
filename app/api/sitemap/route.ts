@@ -1,6 +1,16 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
+// Define the locations you want to target
+const locations = [
+  'belfast',
+  'derry',
+  'lisburn',
+  'newry',
+  'bangor',
+  'northern-ireland'
+]
+
 export async function GET() {
   try {
     // Fetch all blog posts
@@ -39,10 +49,26 @@ export async function GET() {
       },
     ]
 
+    // Generate location pages
+    const locationPages = locations.map(location => ({
+      loc: `https://www.ventureitsolutions.co.uk/web-design/${location}`,
+      lastmod: new Date().toISOString().split('T')[0],
+      changefreq: 'monthly',
+      priority: '0.9',
+    }))
+
     // Generate sitemap XML
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${staticPages.map(page => `
+        <url>
+          <loc>${page.loc}</loc>
+          <lastmod>${page.lastmod}</lastmod>
+          <changefreq>${page.changefreq}</changefreq>
+          <priority>${page.priority}</priority>
+        </url>
+      `).join('')}
+      ${locationPages.map(page => `
         <url>
           <loc>${page.loc}</loc>
           <lastmod>${page.lastmod}</lastmod>

@@ -33,7 +33,11 @@ const services = [
   },
 ]
 
-export function Services() {
+interface ServicesProps {
+  location?: string;
+}
+
+export function Services({ location }: ServicesProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
