@@ -3,7 +3,8 @@
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
 import { Card, CardContent } from "@/components/ui/card"
-import { QuoteIcon } from 'lucide-react'
+import { QuoteIcon, ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 
 const testimonials = [
   {
@@ -23,7 +24,11 @@ const testimonials = [
   }
 ]
 
-export function Testimonials() {
+interface TestimonialsProps {
+  location?: string;
+}
+
+export function Testimonials({ location }: TestimonialsProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -86,6 +91,21 @@ export function Testimonials() {
               </motion.div>
             ))}
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="mt-16 text-center"
+          >
+            <Link 
+              href="/projects" 
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-medium rounded-md bg-primary hover:bg-primary/90 transition-colors"
+            >
+              <span>View Our Project Portfolio</span>
+              <ArrowUpRight className="ml-2 h-4 w-4" />
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import { locations } from '@/config/locations'
 
 export async function GET() {
   try {
@@ -39,10 +40,26 @@ export async function GET() {
       },
     ]
 
+    // Generate location pages using imported locations
+    const locationPages = locations.map(location => ({
+      loc: `https://www.ventureitsolutions.co.uk/web-design/${location}`,
+      lastmod: new Date().toISOString().split('T')[0],
+      changefreq: 'monthly',
+      priority: '0.9',
+    }))
+
     // Generate sitemap XML
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${staticPages.map(page => `
+        <url>
+          <loc>${page.loc}</loc>
+          <lastmod>${page.lastmod}</lastmod>
+          <changefreq>${page.changefreq}</changefreq>
+          <priority>${page.priority}</priority>
+        </url>
+      `).join('')}
+      ${locationPages.map(page => `
         <url>
           <loc>${page.loc}</loc>
           <lastmod>${page.lastmod}</lastmod>

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Instagram, Twitter, X } from 'lucide-react'
+import Link from 'next/link'
 
 export function Footer() {
   const [ref, inView] = useInView({
@@ -18,7 +19,7 @@ export function Footer() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="md:flex md:items-center md:justify-between"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           <div className="flex justify-center space-x-6 md:order-2">
             <a 
@@ -38,8 +39,32 @@ export function Footer() {
               <Twitter className="h-6 w-6" />
             </a>
           </div>
-          <div className="mt-8 md:mt-0 md:order-1">
-            <p className="text-center text-base text-muted-foreground">
+
+          <div className="text-center md:text-left">
+            <h3 className="text-sm font-semibold text-foreground tracking-wider uppercase mb-4">
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/projects" className="text-muted-foreground hover:text-primary transition-colors">
+                  Our Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/estimator" className="text-muted-foreground hover:text-primary transition-colors">
+                  Project Calculator
+                </Link>
+              </li>
+              <li>
+                <Link href="/#contact" className="text-muted-foreground hover:text-primary transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="text-center md:text-left md:order-1">
+            <p className="text-base text-muted-foreground">
               &copy; {new Date().getFullYear()} Venture IT Solutions. All rights reserved.
             </p>
           </div>
