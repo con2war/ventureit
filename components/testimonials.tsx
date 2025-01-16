@@ -37,14 +37,14 @@ export function Testimonials({ location }: TestimonialsProps) {
   return (
     <section className="bg-background py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="lg:text-center"
         >
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -52,7 +52,7 @@ export function Testimonials({ location }: TestimonialsProps) {
           >
             Testimonials
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -60,7 +60,7 @@ export function Testimonials({ location }: TestimonialsProps) {
           >
             What Our Clients Say
           </motion.p>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -90,22 +90,23 @@ export function Testimonials({ location }: TestimonialsProps) {
                 </Card>
               </motion.div>
             ))}
-          </div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="mt-16 text-center"
-          >
-            <Link 
-              href="/projects" 
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-medium rounded-md bg-primary hover:bg-primary/90 transition-colors"
+
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-center mb-16"
             >
-              <span>View Our Project Portfolio</span>
-              <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Link>
-          </motion.div>
+              <Link
+                href="/#contact"
+                className="text-primary hover:text-primary/90 underline text-lg"
+              >
+                View our recent projects →
+              </Link>
+            </motion.div>
+
+          </div>
         </div>
       </div>
     </section>
