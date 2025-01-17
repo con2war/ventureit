@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { formatDate } from '@/lib/utils'
+import { formatDate, stripHtmlTags } from '@/lib/utils'
 import { ArrowRight, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
@@ -13,11 +13,30 @@ interface ByteByByteProps {
   posts: BlogPost[]
 }
 
-export function ByteByByte({ posts }: ByteByByteProps) {
+export function ByteByByte({ posts = [] }: ByteByByteProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
+
+  const getPreviewText = (content: string) => {
+    // First strip the HTML tags
+    const plainText = stripHtmlTags(content)
+    // Then truncate if necessary
+    return plainText.length > 150 
+      ? `${plainText.substring(0, 150)}...` 
+      : plainText
+  }
+
+  if (!posts || posts.length === 0) {
+    return (
+      <div className="bg-black py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-gray-400">No posts available</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-black py-24">
@@ -37,15 +56,18 @@ export function ByteByByte({ posts }: ByteByByteProps) {
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
                 <Link href={`/blog/${post.slug}`}>
-                  <Card className="bg-white/5 hover:bg-white/10 transition-colors">
-                    <CardContent className="p-6">
+                  <Card className="bg-white/5 hover:bg-white/10 transition-colors h-full flex flex-col">
+                    <CardContent className="p-6 flex flex-col flex-grow">
                       {post.imageUrl && (
                         <div className="relative h-48 w-full mb-6 rounded-lg overflow-hidden">
                           <Image
                             src={post.imageUrl}
                             alt={post.title}
                             fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            priority={posts.indexOf(post) === 0}
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
                           />
                         </div>
                       )}
@@ -65,13 +87,22 @@ export function ByteByByte({ posts }: ByteByByteProps) {
                           </div>
                         </div>
                       </div>
-                      <div 
-                        className="text-gray-300 line-clamp-2 mb-4 text-sm text-left"
-                        dangerouslySetInnerHTML={{ 
-                          __html: post.content.substring(0, 150) + '...'
-                        }}
-                      />
-                      <div className="flex items-center text-[#5ce1e6] font-medium group-hover:underline">
+                      <div className="flex items-center space-x-2 mb-4">
+                        {post.category && (
+                          <span className="bg-[#5ce1e6]/10 text-[#5ce1e6] text-xs px-2 py-1 rounded">
+                            {post.category}
+                          </span>
+                        )}
+                        {post.readTime && (
+                          <span className="text-gray-400 text-xs">
+                            {post.readTime} min read
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-gray-300 line-clamp-2 mb-4 text-sm text-left flex-grow">
+                        {post.metaDescription || getPreviewText(post.content)}
+                      </p>
+                      <div className="flex items-center text-[#5ce1e6] font-medium group-hover:underline mt-auto">
                         Read More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </div>

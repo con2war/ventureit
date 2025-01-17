@@ -2,19 +2,20 @@ import { prisma } from '@/lib/prisma'
 import { Header } from '@/components/header'
 import { BlogGrid } from '@/components/blog-grid'
 import { NewsletterSection } from '@/components/newsletter-section'
-import Link from 'next/link'
 import { Footer } from '@/components/footer'
+import type { BlogPost } from '@/types/blog'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 async function getPosts() {
   try {
-    const posts = await prisma.blogPost.findMany({
+    const posts = (await prisma.blogPost.findMany({
       orderBy: {
         createdAt: 'desc'
       }
-    })
+    })) as unknown as BlogPost[]
+    
     return posts
   } catch (error) {
     console.error('Error fetching posts:', error)

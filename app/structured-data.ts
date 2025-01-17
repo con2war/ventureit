@@ -4,6 +4,7 @@ export const structuredData = {
   "name": "Venture IT Solutions",
   "description": "Professional web development services in Northern Ireland. Custom websites, e-commerce solutions, and web applications for businessses globally.",
   "url": "https://www.ventureitsolutions.co.uk",
+  "canonicalUrl": "https://www.ventureitsolutions.co.uk",
   "logo": "https://www.ventureitsolutions.co.uk/images/venture_logo.png",
   "image": "https://www.ventureitsolutions.co.uk/images/venture_logo.png",
   "foundingDate": "2023",
