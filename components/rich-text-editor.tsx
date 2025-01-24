@@ -264,6 +264,7 @@ export function RichTextEditor({
       // Prompt for alt text
       const alt = window.prompt('Enter alt text for image:', file.name)
       
+      // Insert the image into the editor
       editor?.chain().focus().insertContent({
         type: 'image',
         attrs: {
@@ -297,6 +298,9 @@ export function RichTextEditor({
         class: 'prose max-w-none focus:outline-none',
       },
     },
+    enableInputRules: false,
+    enablePasteRules: false,
+    immediatelyRender: false
   })
 
   if (!editor) {
