@@ -1,13 +1,14 @@
 import { Header } from '@/components/header'
 import { Hero } from '@/components/hero'
-import { Services } from '@/components/services'
 import { Testimonials } from '@/components/testimonials'
-import { ByteByByte } from '@/components/byte-by-byte'
 import { ContactForm } from '@/components/contact-form'
 import { HomeFAQ } from '@/components/home-faq'
 import { Footer } from '@/components/footer'
 import { Metadata } from 'next'
 import { locations } from '@/config/locations'
+import { BlogPostsList } from '@/components/blog-posts-list'
+import { Suspense } from 'react'
+import { ServicesContent } from '@/components/services-content'
 
 export async function generateStaticParams() {
   return locations.map((location) => ({
@@ -44,9 +45,17 @@ export default function LocationPage({ params }: { params: { location: string } 
           subtitle={`Professional web design services for businesses in ${capitalizedLocation}. Custom websites, e-commerce solutions, and web applications tailored for your business.`}
           location={capitalizedLocation}
         />
-        <Services location={capitalizedLocation} />
+        <ServicesContent/>
         <Testimonials location={capitalizedLocation} />
         <ContactForm location={capitalizedLocation} />
+        <Suspense fallback={
+          <div className="bg-background py-24">
+            <div className="max-w-7xl mx-auto px-4">Loading posts...</div>
+          </div>
+        }>
+          {/* @ts-expect-error Async Server Component */}
+          <BlogPostsList />
+        </Suspense>
         <HomeFAQ location={capitalizedLocation} />
       </main>
       <Footer />

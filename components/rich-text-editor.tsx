@@ -20,6 +20,7 @@ import {
   Heading2,
   Heading3,
 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 // Custom resizable image extension
 const ResizableImage = Image.extend({
@@ -229,32 +230,19 @@ const ResizableImage = Image.extend({
 interface RichTextEditorProps {
   content: string
   onChange: (content: string) => void
+  onSubmit?: () => void
+  showSubmitButton?: boolean
+  submitButtonText?: string
 }
 
-export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
+export function RichTextEditor({ 
+  content,
+  onChange,
+  onSubmit,
+  showSubmitButton = false,
+  submitButtonText = 'Create Post'
+}: RichTextEditorProps) {
   const [isUploading, setIsUploading] = useState(false)
-
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      ResizableImage,
-      Link.configure({
-        openOnClick: false,
-      }),
-    ],
-    content: content,
-    onUpdate: ({ editor }) => {
-      onChange(editor.getHTML())
-    },
-    editorProps: {
-      attributes: {
-        class: 'prose max-w-none focus:outline-none',
-      },
-    },
-    enableInputRules: false,
-    enablePasteRules: false,
-    immediatelyRender: false
-  })
 
   const handleImageUpload = async (file: File) => {
     try {
@@ -284,12 +272,32 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           title: alt || file.name
         }
       }).run()
+
     } catch (error) {
       console.error('Error uploading image:', error)
     } finally {
       setIsUploading(false)
     }
   }
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      ResizableImage,
+      Link.configure({
+        openOnClick: false,
+      }),
+    ],
+    content: content,
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML())
+    },
+    editorProps: {
+      attributes: {
+        class: 'prose max-w-none focus:outline-none',
+      },
+    },
+  })
 
   if (!editor) {
     return null
@@ -413,6 +421,18 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
       </div>
       
       <EditorContent editor={editor} className="prose max-w-none p-4" />
+      
+      {showSubmitButton && (
+        <div className="border-t bg-muted/50 p-2 flex justify-end">
+          <Button
+            onClick={onSubmit}
+            disabled={isUploading}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            {isUploading ? 'Uploading...' : submitButtonText}
+          </Button>
+        </div>
+      )}
     </div>
   )
 } 
