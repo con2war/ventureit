@@ -109,7 +109,7 @@ export function HomeFAQ({ location }: HomeFAQProps) {
   }
 
   return (
-    <section id="faq" className="py-16 bg-primary">
+    <section id="faq" className="py-16 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -118,10 +118,10 @@ export function HomeFAQ({ location }: HomeFAQProps) {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold mb-4 text-secondary">
+          <h2 className="text-3xl font-bold mb-4">
             Web Design Belfast - Frequently Asked Questions
           </h2>
-          <p className="text-lg text-secondary-400 max-w-3xl mx-auto">
+          <p className="text-lg max-w-3xl mx-auto">
             Find answers to common questions about our web design services in Belfast and across Northern Ireland
           </p>
         </motion.div>
@@ -151,7 +151,7 @@ export function HomeFAQ({ location }: HomeFAQProps) {
                     <AccordionTrigger className="text-left">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-secondary-400">
+                    <AccordionContent>
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>

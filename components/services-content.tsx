@@ -48,7 +48,7 @@ export function ServicesContent() {
   })
 
   return (
-    <section id="services" className="py-24 bg-primary">
+    <section id="services" className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           ref={ref}
@@ -60,7 +60,7 @@ export function ServicesContent() {
           <h1 className="text-4xl font-bold mb-4">
             Web Design Belfast & Northern Ireland
           </h1>
-          <p className="text-xl text-secondary-400">
+          <p className="text-xl">
             Professional Website Design Services at Competitive Prices
           </p>
         </motion.div>
@@ -71,12 +71,12 @@ export function ServicesContent() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="grid md:grid-cols-2 gap-12 mb-16"
         >
-          <Card className="bg-primary/5 hover:bg-primary/10 transition-colors">
+          <Card className="bg-background/5 hover:bg-background/10 transition-colors">
             <CardContent className="p-6">
               <h2 className="text-2xl font-semibold mb-4">
                 Freelance Web Designer Belfast
               </h2>
-              <p className="text-secondary-400 mb-6">
+              <p className="mb-6">
                 As experienced web designers in Belfast, we provide professional website design services 
                 tailored to your business needs. Our front-end web design expertise ensures your 
                 website not only looks great but performs excellently across all devices.
@@ -91,12 +91,12 @@ export function ServicesContent() {
             </CardContent>
           </Card>
           
-          <Card className="bg-primary/5 hover:bg-primary/10 transition-colors">
+          <Card className="bg-background/5 hover:bg-background/10 transition-colors">
             <CardContent className="p-6">
               <h2 className="text-2xl font-semibold mb-4">
                 Website Design Northern Ireland
               </h2>
-              <p className="text-secondary-400 mb-6">
+              <p className="mb-6">
                 Serving businesses across Northern Ireland with professional web design services. 
                 We combine creative design with technical expertise to deliver websites that drive 
                 results for your business.
@@ -120,13 +120,13 @@ export function ServicesContent() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 + index * 0.1 }}
             >
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-colors h-full">
+              <Card className="bg-background/5 hover:bg-background/10 transition-colors h-full">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                   <p className="text-2xl font-bold text-[#5ce1e6] mb-4">{service.price}</p>
                   <ul className="space-y-2">
                     {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-secondary-400">
+                      <li key={featureIndex} className="flex items-center">
                         <svg
                           className="h-5 w-5 text-[#5ce1e6] mr-2"
                           fill="none"
@@ -158,28 +158,28 @@ export function ServicesContent() {
             Front Web Design Belfast - Why Choose Us?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-primary/5 hover:bg-primary/10 transition-colors">
+            <Card className="bg-background/5 hover:bg-background/10 transition-colors">
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Expert Design</h3>
-                <p className="text-secondary-400">
+                <p>
                   Professional web designers with years of experience in creating 
                   stunning, functional websites.
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-primary/5 hover:bg-primary/10 transition-colors">
+            <Card className="bg-background/5 hover:bg-background/10 transition-colors">
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Competitive Pricing</h3>
-                <p className="text-secondary-400">
+                <p>
                   Transparent pricing structure with packages to suit all budgets 
                   and business needs.
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-primary/5 hover:bg-primary/10 transition-colors">
+            <Card className="bg-background/5 hover:bg-background/10 transition-colors">
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Local Support</h3>
-                <p className="text-secondary-400">
+                <p>
                   Based in Belfast, offering personalized support and maintenance 
                   for your website.
                 </p>
