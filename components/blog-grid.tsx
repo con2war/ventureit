@@ -71,7 +71,7 @@ export function BlogGrid({ posts }: BlogGridProps) {
                   {formatDate(post.createdAt)}
                 </time>
                 
-                <p className="mb-4 line-clamp-3 text-sm text-secondary">
+                <p className="mb-4 line-clamp-3 text-sm">
                   {post.metaDescription || getPreviewText(post.content)}
                 </p>
 

@@ -46,10 +46,10 @@ body {
   }
  
   .dark {
-    --background: 10 10% 10%;
+    --background: 0 0% 5%;
     --foreground: 10 10% 100%;
  
-    --card: 10 10% 15%;
+    --card: 0 0% 10%;
     --card-foreground: 10 10% 100%;
  
     --popover: 222.2 84% 4.9%;

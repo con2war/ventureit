@@ -261,10 +261,8 @@ export function RichTextEditor({
 
       const { url } = await response.json()
       
-      // Prompt for alt text
       const alt = window.prompt('Enter alt text for image:', file.name)
       
-      // Insert the image into the editor
       editor?.chain().focus().insertContent({
         type: 'image',
         attrs: {
@@ -298,13 +296,16 @@ export function RichTextEditor({
         class: 'prose max-w-none focus:outline-none',
       },
     },
-    enableInputRules: false,
-    enablePasteRules: false,
-    immediatelyRender: false
   })
 
   if (!editor) {
     return null
+  }
+
+  const handleToolbarButtonClick = (e: React.MouseEvent, action: () => void) => {
+    e.preventDefault()
+    e.stopPropagation()
+    action()
   }
 
   return (
@@ -312,73 +313,83 @@ export function RichTextEditor({
       <div className="border-b bg-muted/50 p-2">
         <div className="flex flex-wrap gap-2">
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleBold().run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleBold().run())}
             className={editor.isActive('bold') ? 'bg-muted' : ''}
           >
             <Bold className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleItalic().run())}
             className={editor.isActive('italic') ? 'bg-muted' : ''}
           >
             <Italic className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleHeading({ level: 1 }).run())}
             className={editor.isActive('heading', { level: 1 }) ? 'bg-muted' : ''}
           >
             <Heading1 className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleHeading({ level: 2 }).run())}
             className={editor.isActive('heading', { level: 2 }) ? 'bg-muted' : ''}
           >
             <Heading2 className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleHeading({ level: 3 }).run())}
             className={editor.isActive('heading', { level: 3 }) ? 'bg-muted' : ''}
           >
             <Heading3 className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleBulletList().run())}
             className={editor.isActive('bulletList') ? 'bg-muted' : ''}
           >
             <List className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleOrderedList().run())}
             className={editor.isActive('orderedList') ? 'bg-muted' : ''}
           >
             <ListOrdered className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().toggleBlockquote().run())}
             className={editor.isActive('blockquote') ? 'bg-muted' : ''}
           >
             <Quote className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
               const url = window.prompt('Enter URL')
               if (url) {
                 editor.chain().focus().setLink({ href: url }).run()
@@ -389,9 +400,11 @@ export function RichTextEditor({
             <LinkIcon className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
               const input = document.createElement('input')
               input.type = 'file'
               input.accept = 'image/*'
@@ -408,16 +421,18 @@ export function RichTextEditor({
             <ImageIcon className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().undo().run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().undo().run())}
           >
             <Undo className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
-            onClick={() => editor.chain().focus().redo().run()}
+            onClick={(e) => handleToolbarButtonClick(e, () => editor.chain().focus().redo().run())}
           >
             <Redo className="h-4 w-4" />
           </Button>
@@ -429,7 +444,11 @@ export function RichTextEditor({
       {showSubmitButton && (
         <div className="border-t bg-muted/50 p-2 flex justify-end">
           <Button
-            onClick={onSubmit}
+            type="button"
+            onClick={(e) => {
+              e.preventDefault()
+              onSubmit?.()
+            }}
             disabled={isUploading}
             className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
