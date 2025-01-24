@@ -49,6 +49,14 @@ export async function POST(request: Request) {
           imageUrl: previewImageUrl || null,
           upvotes: 0,
           downvotes: 0,
+          category: body.category || 'web-development',
+          readTime: body.readTime || '5',
+          metaDescription: body.metaDescription,
+          keywords: body.keywords,
+          canonicalUrl: body.canonicalUrl,
+          ogImage: body.ogImage,
+          ogTitle: body.ogTitle,
+          ogDescription: body.ogDescription
         },
       })
 
