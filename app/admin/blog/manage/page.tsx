@@ -84,6 +84,7 @@ export default function ManageBlogPosts() {
                         src={post.imageUrl}
                         alt={post.title}
                         fill
+                        sizes="80px"
                         className="object-cover"
                       />
                     </div>

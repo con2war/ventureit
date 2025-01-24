@@ -5,6 +5,17 @@ import { useInView } from 'react-intersection-observer'
 import { Instagram, Twitter, X } from 'lucide-react'
 import Link from 'next/link'
 
+const locations = [
+  { name: 'Belfast', slug: 'belfast' },
+  { name: 'Bangor', slug: 'bangor' },
+  { name: 'Newry', slug: 'newry' },
+  { name: 'Lisburn', slug: 'lisburn' },
+  { name: 'Derry', slug: 'derry' },
+  { name: 'Northern Ireland', slug: 'northern-ireland' },
+  { name: 'Ireland', slug: 'ireland' },
+  { name: 'UK', slug: 'UK' },
+]
+
 export function Footer() {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -19,7 +30,7 @@ export function Footer() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-4 gap-8"
         >
           <div className="flex justify-center space-x-6 md:order-2">
             <a 
@@ -60,6 +71,24 @@ export function Footer() {
                   Contact Us
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          <div className="text-center md:text-left">
+            <h3 className="text-sm font-semibold text-foreground tracking-wider uppercase mb-4">
+              Web Design Services
+            </h3>
+            <ul className="space-y-2">
+              {locations.map((location) => (
+                <li key={location.slug}>
+                  <Link
+                    href={`/web-design/${location.slug}`}
+                    className="text-muted-foreground hover:text-primary transition-colors block"
+                  >
+                    {location.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

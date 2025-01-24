@@ -50,7 +50,7 @@ export function NewsletterSection() {
             required
             className="flex-1"
           />
-          <Button type="submit" disabled={isLoading}>
+          <Button type="submit" className="bg-white hover:bg-white/90 text-black" disabled={isLoading}>
             {isLoading ? 'Subscribing...' : 'Subscribe'}
           </Button>
         </form>

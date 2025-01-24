@@ -40,31 +40,53 @@ export async function POST(request: Request) {
       .replace(/(^-|-$)+/g, '')
 
     try {
-      // Create the blog post using BlogPost model instead of post
+      // Prepare the data object with type checking
+      const postData = {
+        title: String(title),
+        content: String(content),
+        slug: String(slug),
+        imageUrl: previewImageUrl ? String(previewImageUrl) : null,
+        upvotes: 0,
+        downvotes: 0,
+        category: body.category ? String(body.category) : 'web-development',
+        readTime: body.readTime ? String(body.readTime) : '5',
+        metaDescription: body.metaDescription ? String(body.metaDescription) : null,
+        keywords: body.keywords ? String(body.keywords) : null,
+        canonicalUrl: body.canonicalUrl ? String(body.canonicalUrl) : null,
+        ogImage: body.ogImage ? String(body.ogImage) : null,
+        ogTitle: body.ogTitle ? String(body.ogTitle) : null,
+        ogDescription: body.ogDescription ? String(body.ogDescription) : null,
+        author: body.author || null
+      }
+
+      console.log('Attempting to create post with data:', postData)
+
+      // Create the blog post
       const post = await prisma.blogPost.create({
-        data: {
-          title,
-          content,
-          slug,
-          imageUrl: previewImageUrl || null,
-          upvotes: 0,
-          downvotes: 0,
-        },
+        data: postData
       })
 
       console.log('Created post:', post)
       return NextResponse.json({ success: true, post })
     } catch (error) {
-      console.error('Database error:', error)
+      console.error('Detailed database error:', error)
+      // Return more specific error information
       return NextResponse.json(
-        { error: 'Failed to create post in database' },
+        { 
+          error: 'Failed to create post in database',
+          details: error instanceof Error ? error.message : 'Unknown error',
+          data: body 
+        },
         { status: 500 }
       )
     }
   } catch (error) {
     console.error('Error creating post:', error)
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal Server Error' },
+      { 
+        error: error instanceof Error ? error.message : 'Internal Server Error',
+        details: error instanceof Error ? error.stack : 'No stack trace available'
+      },
       { status: 500 }
     )
   }
