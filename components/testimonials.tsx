@@ -80,7 +80,7 @@ export function Testimonials({ location }: TestimonialsProps) {
               >
                 <Card className="bg-card hover:bg-card/90 transition-colors h-full">
                   <CardContent className="p-6 flex flex-col h-full">
-                    <QuoteIcon className="h-8 w-8 text-primary mb-4" />
+                    <QuoteIcon className="h-8 w-8 text-[#5ce1e6] mb-4" />
                     <p className="text-foreground mb-4 flex-grow">{testimonial.quote}</p>
                     <div className="text-sm text-muted-foreground">
                       <p className="font-semibold">{testimonial.author}</p>

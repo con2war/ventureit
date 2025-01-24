@@ -223,7 +223,7 @@ export function ProjectEstimator() {
                                         className="bg-background text-foreground"
                                     />
                                 </div>
-                                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                                <Button type="submit" className="w-full bg-[#] hover:bg-primary/90 text-primary-foreground">
                                     Find out more
                                 </Button>
                             </form>
@@ -277,14 +277,14 @@ export function ProjectEstimator() {
             {!showQuote && (
                 <div className="mt-6 flex justify-between">
                     {step > 1 && (
-                        <Button onClick={handlePrevStep} variant="outline">
+                        <Button onClick={handlePrevStep} variant="outline" className="bg-[#ff5757] hover:bg-[#ff5757]/90 text-white">
                             Previous
                         </Button>
                     )}
                     {step < 4 && (
                         <Button
                             onClick={handleNextStep}
-                            className="ml-auto bg-primary hover:bg-primary/90 text-primary-foreground"
+                            className="ml-auto bg-[#ff5757] hover:bg-[#ff5757]/90 text-white"
                         >
                             Next
                         </Button>

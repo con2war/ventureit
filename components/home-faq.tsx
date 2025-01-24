@@ -10,87 +10,70 @@ import { motion } from "framer-motion"
 
 const faqCategories = [
   {
-    category: "Services & Expertise",
+    category: "Web Design Belfast Services",
     faqs: [
       {
-        question: "What web development services do you offer?",
-        answer: "We provide a comprehensive range of web development services including custom website development, e-commerce solutions, web applications, content management systems, API development, and database design. Our expertise spans from simple business websites to complex enterprise applications, all built with modern technologies like React, Next.js, and TypeScript."
+        question: "What web design services do you offer in Belfast?",
+        answer: "As a leading web design agency in Belfast, we offer comprehensive website design services including custom website development, e-commerce solutions, responsive design, and CMS integration. Our Belfast-based team specializes in creating modern, user-friendly websites that drive business growth and enhance your online presence across Northern Ireland."
       },
       {
-        question: "Do you handle both frontend and backend development?",
-        answer: "Yes, we offer full-stack development services. Our team is proficient in both frontend technologies (React, Next.js, TypeScript) and backend solutions (Node.js, Python, databases). We ensure seamless integration between all components of your web application."
+        question: "How much does website design in Belfast cost?",
+        answer: "Our Website Design Belfast prices start from £599 for professional business websites. E-commerce websites start from £999, and custom web development projects from £1,499. Each package includes responsive design, SEO optimization, and content management systems. We offer competitive pricing while maintaining high-quality standards for businesses across Northern Ireland."
       },
       {
-        question: "Can you help with website redesign projects?",
-        answer: "Absolutely! We specialize in modernizing existing websites while preserving their SEO value and improving user experience. Our redesign process includes thorough analysis of your current site, identifying improvement areas, and implementing modern design principles while ensuring minimal disruption to your business."
+        question: "Do you provide freelance web designer services in Belfast?",
+        answer: "Yes, we operate as professional freelance web designers in Belfast, offering flexible and personalized web design services. This allows us to provide competitive rates while maintaining direct communication and high-quality results. Our freelance web design service includes custom designs, regular updates, and ongoing support."
       }
     ]
   },
   {
-    category: "Project Process & Timeline",
+    category: "Website Design Northern Ireland",
     faqs: [
       {
-        question: "What is your typical project process?",
-        answer: "Our development process follows these key stages: 1) Initial consultation and requirements gathering, 2) Project planning and proposal, 3) Design phase with client feedback, 4) Development with regular updates, 5) Testing and quality assurance, 6) Launch and deployment, 7) Post-launch support and maintenance. We maintain clear communication throughout each stage."
+        question: "What makes your website design services unique in Northern Ireland?",
+        answer: "As a dedicated website design company in Northern Ireland, we combine local expertise with international design standards. We understand the specific needs of Northern Irish businesses and create websites that resonate with local audiences while competing globally. Our services include custom design, local SEO optimization, and ongoing support."
       },
       {
-        question: "How long does it take to complete a website?",
-        answer: "Project timelines vary based on complexity and requirements. Simple websites typically take 4-6 weeks, while complex e-commerce or custom web applications may take 3-6 months. We provide a detailed timeline during our initial consultation and deliver a prototype within 24 hours of project commencement."
+        question: "Can you help with e-commerce website design in Northern Ireland?",
+        answer: "Absolutely! We specialize in creating e-commerce websites for Northern Ireland businesses. Our solutions include secure payment gateways, inventory management systems, and mobile-responsive designs. We ensure your online store is optimized for both local and international customers, with features tailored to your specific business needs."
       },
       {
-        question: "How do you handle project changes and revisions?",
-        answer: "We follow an agile development approach that allows for flexibility and changes throughout the project. Each project includes a set number of revision rounds, and we're transparent about any additional costs for significant scope changes. We prioritize clear communication to ensure your vision is achieved."
+        question: "Do you offer website maintenance services across Northern Ireland?",
+        answer: "Yes, we provide comprehensive website maintenance services throughout Northern Ireland. This includes regular updates, security monitoring, content updates, and technical support. We offer various maintenance packages to ensure your website remains secure, up-to-date, and performing optimally."
       }
     ]
   },
   {
-    category: "Technology & Security",
+    category: "Front End Web Design Belfast",
     faqs: [
       {
-        question: "What technologies and platforms do you use?",
-        answer: "We use modern, industry-leading technologies including React, Next.js, TypeScript, Node.js, and various databases. Our tech stack is chosen based on project requirements to ensure optimal performance, security, and scalability. We stay current with the latest developments in web technology to provide cutting-edge solutions."
+        question: "What front-end technologies do you use for web design in Belfast?",
+        answer: "Our front web design Belfast services utilize the latest technologies including React, Next.js, and modern CSS frameworks. We focus on creating responsive, fast-loading websites with excellent user experiences. Our front-end development ensures your website looks great and performs well on all devices."
       },
       {
-        question: "How do you ensure website security?",
-        answer: "Security is paramount in our development process. We implement multiple security measures including SSL certificates, secure authentication systems, regular security updates, data encryption, and protection against common vulnerabilities. We also provide ongoing security monitoring and maintenance."
+        question: "How do you ensure website performance for Belfast businesses?",
+        answer: "We optimize every aspect of front-end development, including image optimization, code minification, and caching strategies. Our Belfast web design team focuses on achieving fast loading speeds, smooth animations, and responsive layouts that work perfectly across all devices and browsers."
       },
       {
-        question: "Do you provide hosting and domain services?",
-        answer: "Yes, we offer comprehensive hosting solutions with high uptime guarantees, regular backups, and performance optimization. Our hosting packages include SSL certificates, CDN integration, and 24/7 monitoring. We can also assist with domain registration and management."
+        question: "What support do you offer after website launch?",
+        answer: "We provide comprehensive post-launch support for all our Belfast web design clients. This includes performance monitoring, regular updates, content management training, and technical support. Our team is always available to help with any questions or updates you need."
       }
     ]
   },
   {
-    category: "Support & Maintenance",
+    category: "Custom Web Solutions",
     faqs: [
       {
-        question: "What kind of support do you offer after launch?",
-        answer: "We provide comprehensive post-launch support including: 24/7 technical support, regular maintenance updates, performance monitoring, security patches, content updates, and feature enhancements. Our support packages are tailored to your specific needs and ensure your website remains secure and up-to-date."
+        question: "Can you create custom functionality for my website?",
+        answer: "Yes, we specialize in developing custom web solutions tailored to your specific business needs. Whether you need advanced booking systems, custom CRM integration, or unique e-commerce features, our Belfast-based development team can create bespoke solutions that perfectly match your requirements."
       },
       {
-        question: "Do you offer training for content management?",
-        answer: "Yes, we provide thorough training for your team on how to manage and update your website content. This includes detailed documentation, video tutorials, and hands-on training sessions. We ensure you're comfortable with your content management system before project completion."
+        question: "How do you handle website security?",
+        answer: "Security is paramount in our web design process. We implement multiple security measures including SSL certificates, secure authentication systems, regular security updates, and protection against common vulnerabilities. We also provide ongoing security monitoring and maintenance for websites across Northern Ireland."
       },
       {
-        question: "What is your response time for support issues?",
-        answer: "We prioritize support issues based on severity. Critical issues are addressed within 1-2 hours, while standard maintenance requests are typically handled within 24-48 hours. All our support packages include guaranteed response times and regular maintenance windows."
-      }
-    ]
-  },
-  {
-    category: "Pricing & Payments",
-    faqs: [
-      {
-        question: "How do you structure your pricing?",
-        answer: "Our pricing is transparent and project-based, determined by factors such as complexity, features required, and development time. We provide detailed quotes breaking down all costs, and offer flexible payment plans. Use our project calculator for an initial estimate, or contact us for a personalized quote."
-      },
-      {
-        question: "Do you offer ongoing maintenance packages?",
-        answer: "Yes, we offer several maintenance packages to suit different needs and budgets. These include regular updates, security monitoring, content updates, technical support, and performance optimization. We can customize a maintenance plan to match your specific requirements."
-      },
-      {
-        question: "What payment methods do you accept?",
-        answer: "We accept various payment methods including bank transfers, credit cards, and scheduled payment plans. For larger projects, we typically structure payments in milestones: initial deposit, development phases, and final payment upon completion."
+        question: "What is your web design process?",
+        answer: "Our web design process in Belfast includes: 1) Initial consultation and requirements gathering, 2) Design concept creation, 3) Development phase, 4) Testing and quality assurance, 5) Launch and deployment, 6) Post-launch support. We maintain clear communication throughout each stage and deliver results that exceed expectations."
       }
     ]
   }
@@ -126,7 +109,7 @@ export function HomeFAQ({ location }: HomeFAQProps) {
   }
 
   return (
-    <section id="faq" className="py-16 bg-background">
+    <section id="faq" className="py-16 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -135,11 +118,11 @@ export function HomeFAQ({ location }: HomeFAQProps) {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold mb-4">
-            Frequently Asked Questions
+          <h2 className="text-3xl font-bold mb-4 text-secondary">
+            Web Design Belfast - Frequently Asked Questions
           </h2>
-          <p className="text-lg max-w-3xl mx-auto">
-            Find answers to common questions about our web development services, process, and support
+          <p className="text-lg text-secondary-400 max-w-3xl mx-auto">
+            Find answers to common questions about our web design services in Belfast and across Northern Ireland
           </p>
         </motion.div>
 
@@ -168,7 +151,7 @@ export function HomeFAQ({ location }: HomeFAQProps) {
                     <AccordionTrigger className="text-left">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">
+                    <AccordionContent className="text-secondary-400">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>

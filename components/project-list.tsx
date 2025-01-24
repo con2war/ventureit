@@ -84,7 +84,7 @@ export function ProjectList() {
               {project.url && (
                 <Button 
                   asChild
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-colors"
+                  className="w-full bg-[#ff5757] hover:bg-[#ff5757]/90 text-pwhite transition-colors"
                 >
                   <a 
                     href={project.url} 
