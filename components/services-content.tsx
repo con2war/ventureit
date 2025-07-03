@@ -4,11 +4,19 @@ import { Badge } from "@/components/ui/badge"
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Card, CardContent } from "@/components/ui/card"
+import { useEffect, useState } from 'react'
+
+interface GeoLocation {
+  city: string;
+  region: string;
+  country: string;
+}
 
 const serviceFeatures = [
   {
-    title: "Professional Web Design Belfast",
-    price: "from £499",
+    title: "Professional Web Design Sydney",
+    priceGBP: "from £499",
+    priceAUD: "from $950",
     features: [
       "Responsive design for all devices",
       "SEO optimized structure",
@@ -19,7 +27,8 @@ const serviceFeatures = [
   },
   {
     title: "E-commerce Website Design",
-    price: "from £999",
+    priceGBP: "from £999",
+    priceAUD: "from $1,900", 
     features: [
       "Secure payment integration",
       "Product management system",
@@ -30,7 +39,8 @@ const serviceFeatures = [
   },
   {
     title: "Custom Web Development",
-    price: "from £1499",
+    priceGBP: "from £1499",
+    priceAUD: "from $2,850",
     features: [
       "Bespoke functionality",
       "API integration",
@@ -46,6 +56,32 @@ export function ServicesContent() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const [userLocation, setUserLocation] = useState<GeoLocation | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Fetch user's location from IP
+    const fetchLocation = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json()
+        setUserLocation({
+          city: data.city,
+          region: data.region,
+          country: data.country_name
+        })
+      } catch (error) {
+        console.error('Error fetching location:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchLocation()
+  }, [])
+
+  // Determine if user is in Australia
+  const isAustralianUser = userLocation?.country === "Australia"
 
   return (
     <section id="services" className="py-24 bg-background">
@@ -58,7 +94,7 @@ export function ServicesContent() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl font-bold mb-4">
-            Web Design Belfast & Northern Ireland
+            Web Design Sydney & Eastern Suburbs
           </h1>
           <p className="text-xl">
             Professional Website Design Services at Competitive Prices
@@ -74,10 +110,10 @@ export function ServicesContent() {
           <Card className="bg-background/5 hover:bg-background/10 transition-colors">
             <CardContent className="p-6">
               <h2 className="text-2xl font-semibold mb-4">
-                Freelance Web Designer Belfast
+                Freelance Web Designer Sydney
               </h2>
               <p className="mb-6">
-                As experienced web designers in Belfast, we provide professional website design services 
+                As experienced web designers in Sydney, we provide professional website design services 
                 tailored to your business needs. Our front-end web design expertise ensures your 
                 website not only looks great but performs excellently across all devices.
               </p>
@@ -94,10 +130,10 @@ export function ServicesContent() {
           <Card className="bg-background/5 hover:bg-background/10 transition-colors">
             <CardContent className="p-6">
               <h2 className="text-2xl font-semibold mb-4">
-                Website Design Northern Ireland
+                Website Design Eastern Suburbs
               </h2>
               <p className="mb-6">
-                Serving businesses across Northern Ireland with professional web design services. 
+                Serving businesses across Sydney's Eastern Suburbs with professional web design services. 
                 We combine creative design with technical expertise to deliver websites that drive 
                 results for your business.
               </p>
@@ -123,7 +159,14 @@ export function ServicesContent() {
               <Card className="bg-background/5 hover:bg-background/10 transition-colors h-full">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-2xl font-bold text-[#5ce1e6] mb-4">{service.price}</p>
+                  <p className="text-2xl font-bold text-[#5ce1e6] mb-4">
+                    {isLoading ? "Loading..." : (isAustralianUser ? service.priceAUD : service.priceGBP)}
+                  </p>
+                  {!isLoading && (
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {isAustralianUser ? "Prices in AUD" : "Prices in GBP"}
+                    </p>
+                  )}
                   <ul className="space-y-2">
                     {service.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center">
@@ -155,7 +198,7 @@ export function ServicesContent() {
           className="mt-16 text-center"
         >
           <h2 className="text-2xl font-semibold mb-8">
-            Front Web Design Belfast - Why Choose Us?
+            Front Web Design Sydney - Why Choose Us?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="bg-background/5 hover:bg-background/10 transition-colors">
@@ -180,7 +223,7 @@ export function ServicesContent() {
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Local Support</h3>
                 <p>
-                  Based in Belfast, offering personalized support and maintenance 
+                  Based in Sydney, offering personalized support and maintenance 
                   for your website.
                 </p>
               </CardContent>

@@ -2,7 +2,7 @@ export const structuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Venture IT Solutions",
-  "description": "Professional web development services in Northern Ireland. Custom websites, e-commerce solutions, and web applications for businessses globally.",
+  "description": "Professional web development services in Sydney and Northern Ireland. Custom websites, e-commerce solutions, and web applications for businesses globally.",
   "url": "https://www.ventureitsolutions.co.uk",
   "canonicalUrl": "https://www.ventureitsolutions.co.uk",
   "logo": "https://www.ventureitsolutions.co.uk/images/venture_logo.png",
@@ -10,15 +10,15 @@ export const structuredData = {
   "foundingDate": "2023",
   "address": {
     "@type": "PostalAddress",
-    "addressRegion": "Northern Ireland",
-    "addressLocality": "Belfast",
-    "addressCountry": "GB"
+    "addressRegion": "New South Wales",
+    "addressLocality": "Sydney",
+    "addressCountry": "AU"
   },
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer service",
     "email": "info@ventureitsolutions.co.uk",
-    "areaServed": ["IE", "GB"],
+    "areaServed": ["IE", "GB", "AU"],
     "availableLanguage": ["English"]
   },
   "sameAs": [
@@ -26,6 +26,15 @@ export const structuredData = {
     // Add other social media URLs if available
   ],
   "areaServed": [
+    {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": "-33.8688",
+        "longitude": "151.2093"
+      },
+      "geoRadius": "500"
+    },
     {
       "@type": "GeoCircle",
       "geoMidpoint": {

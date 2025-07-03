@@ -19,7 +19,7 @@ interface GeoLocation {
 }
 
 export function Hero({ 
-  title = "Web Development Northern Ireland",
+  title = "Web Development Sydney & Northern Ireland",
   subtitle = "We deliver cutting-edge tech solutions to businesses.",
   location 
 }: HeroProps = {}) {
@@ -59,8 +59,31 @@ export function Hero({
     }
   }, [])
 
-  // Use provided location or detected city if in Northern Ireland
-  const displayLocation = location || (userLocation?.region === "Northern Ireland" ? userLocation.city : "Northern Ireland")
+  // Use provided location or detected city if in Northern Ireland or Sydney area
+  const displayLocation = location || (userLocation?.region === "Northern Ireland" ? userLocation.city : 
+    userLocation?.country === "Australia" ? userLocation.city : "Sydney & Northern Ireland")
+
+  // Determine the service area text based on location
+  const getServiceAreaText = () => {
+    if (location) {
+      // If a specific location is provided (like Bondi, Coogee, etc.)
+      if (location.includes('sydney') || location.includes('bondi') || location.includes('coogee') || 
+          location.includes('randwick') || location.includes('eastern-suburbs') || location.includes('inner-east')) {
+        return `Based in ${location.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}, serving businesses across Sydney.`
+      }
+      return `Based in ${location.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}, serving businesses across Sydney and Northern Ireland.`
+    }
+    
+    if (userLocation?.country === "Australia") {
+      return `Based in ${userLocation.city}, serving businesses across Sydney.`
+    }
+    
+    if (userLocation?.region === "Northern Ireland") {
+      return `Based in ${userLocation.city}, serving businesses across Northern Ireland and Sydney.`
+    }
+    
+    return "Serving businesses across Sydney and Northern Ireland."
+  }
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -97,11 +120,9 @@ export function Hero({
           className="mt-6 max-w-lg mx-auto text-xl text-gray-300 sm:max-w-3xl"
         >
           {subtitle}
-          {displayLocation && (
-            <span className="block mt-2">
-              Based in {displayLocation}, serving businesses across Northern Ireland.
-            </span>
-          )}
+          <span className="block mt-2">
+            {getServiceAreaText()}
+          </span>
         </motion.p>
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

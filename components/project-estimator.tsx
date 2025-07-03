@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -10,21 +10,27 @@ import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from 'react-hot-toast'
 
+interface GeoLocation {
+  city: string;
+  region: string;
+  country: string;
+}
+
 const websiteTypes = [
-    { id: 'portfolio', name: 'Portfolio', basePrice: 1000 },
-    { id: 'blog', name: 'Blog', basePrice: 1500 },
-    { id: 'ecommerce', name: 'E-commerce', basePrice: 2000 },
-    { id: 'booking', name: 'Booking Manager', basePrice: 2000 },
-    { id: 'cms', name: 'Content Managed Website', basePrice: 2000 },
-    { id: 'other', name: 'Other', basePrice: 1500 },
+    { id: 'portfolio', name: 'Portfolio', basePriceGBP: 1000, basePriceAUD: 1900 },
+    { id: 'blog', name: 'Blog', basePriceGBP: 1500, basePriceAUD: 2850 },
+    { id: 'ecommerce', name: 'E-commerce', basePriceGBP: 2000, basePriceAUD: 3800 },
+    { id: 'booking', name: 'Booking Manager', basePriceGBP: 2000, basePriceAUD: 3800 },
+    { id: 'cms', name: 'Content Managed Website', basePriceGBP: 2000, basePriceAUD: 3800 },
+    { id: 'other', name: 'Other', basePriceGBP: 1500, basePriceAUD: 2850 },
 ]
 
 const additionalFeatures = [
-    { id: 'domain', name: 'Domain Name Registration', price: 15 },
-    { id: 'hosting', name: 'Web Hosting (per year)', price: 150 },
-    { id: 'seo', name: 'SEO Work', price: 250 },
-    { id: 'logo', name: 'Logo Creation', price: 100 },
-    { id: 'photography', name: 'Photography Session', price: 500 },
+    { id: 'domain', name: 'Domain Name Registration', priceGBP: 15, priceAUD: 30 },
+    { id: 'hosting', name: 'Web Hosting (per year)', priceGBP: 150, priceAUD: 285 },
+    { id: 'seo', name: 'SEO Work', priceGBP: 250, priceAUD: 475 },
+    { id: 'logo', name: 'Logo Creation', priceGBP: 100, priceAUD: 190 },
+    { id: 'photography', name: 'Photography Session', priceGBP: 500, priceAUD: 950 },
 ]
 
 export function ProjectEstimator() {
@@ -41,8 +47,34 @@ export function ProjectEstimator() {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [showQuote, setShowQuote] = useState(false)
+    const [userLocation, setUserLocation] = useState<GeoLocation | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     const [error, setError] = useState('')
+
+    useEffect(() => {
+        // Fetch user's location from IP
+        const fetchLocation = async () => {
+            try {
+                const response = await fetch('https://ipapi.co/json/')
+                const data = await response.json()
+                setUserLocation({
+                    city: data.city,
+                    region: data.region,
+                    country: data.country_name
+                })
+            } catch (error) {
+                console.error('Error fetching location:', error)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        fetchLocation()
+    }, [])
+
+    // Determine if user is in Australia
+    const isAustralianUser = userLocation?.country === "Australia"
 
     const handleNextStep = () => {
         if (step === 1 && !websiteType) {
@@ -92,12 +124,13 @@ export function ProjectEstimator() {
     }
 
     const calculateTotalCost = () => {
-        const basePrice = websiteTypes.find(type => type.id === websiteType)?.basePrice || 0
-        const pagesCost = (pages - 1) * 100
-        const featuresCost = Object.values(features).filter(Boolean).length * 200
+        const selectedWebsiteType = websiteTypes.find(type => type.id === websiteType)
+        const basePrice = isAustralianUser ? (selectedWebsiteType?.basePriceAUD || 0) : (selectedWebsiteType?.basePriceGBP || 0)
+        const pagesCost = (pages - 1) * (isAustralianUser ? 190 : 100)
+        const featuresCost = Object.values(features).filter(Boolean).length * (isAustralianUser ? 380 : 200)
         const additionalFeaturesCost = selectedAdditionalFeatures.reduce((total, featureId) => {
             const feature = additionalFeatures.find(f => f.id === featureId)
-            return total + (feature?.price || 0)
+            return total + (isAustralianUser ? (feature?.priceAUD || 0) : (feature?.priceGBP || 0))
         }, 0)
 
         return basePrice + pagesCost + featuresCost + additionalFeaturesCost
@@ -224,7 +257,7 @@ export function ProjectEstimator() {
                                     />
                                 </div>
                                 <Button type="submit" className="w-full bg-[#] hover:bg-primary/90 text-primary-foreground">
-                                    Find out more
+                                    Get Quote!
                                 </Button>
                             </form>
                         </CardContent>
@@ -245,7 +278,14 @@ export function ProjectEstimator() {
                         <p><strong>Number of Pages:</strong> {pages}</p>
                         <p><strong>Features:</strong> {Object.entries(features).filter(([, value]) => value).map(([key]) => key).join(', ') || 'None'}</p>
                         <p><strong>Additional Features:</strong> {selectedAdditionalFeatures.map(id => additionalFeatures.find(f => f.id === id)?.name).join(', ') || 'None'}</p>
-                        <p className="text-2xl font-bold mt-4">Estimated Total: £{calculateTotalCost()}</p>
+                        <p className="text-2xl font-bold mt-4">
+                            Estimated Total: {isAustralianUser ? `$${calculateTotalCost().toLocaleString()}` : `£${calculateTotalCost().toLocaleString()}`}
+                        </p>
+                        {!isLoading && (
+                            <p className="text-sm text-muted-foreground mt-2">
+                                {isAustralianUser ? "Prices in AUD" : "Prices in GBP"}
+                            </p>
+                        )}
                     </div>
                     <p className="mt-4 text-sm text-muted-foreground">This is an estimate. Final pricing may vary based on specific project requirements.</p>
                     <p className="mt-4 text-foreground">Thank you for your interest, {name}. We'll be in touch with you soon at {email} or {phone}.</p>

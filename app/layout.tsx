@@ -22,12 +22,12 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Venture IT Solutions | Web Design Northern Ireland',
-  description: 'Professional web development services in Northern Ireland. Custom websites, e-commerce solutions, and web applications for businessses globally.',
-  keywords: 'web development northern ireland, web design belfast, web developer ni, web design ni, custom web design ni, ecommerce websites ireland, responsive web design belfast, web development company ireland, website development ni, digital solutions northern ireland, web development belfast',
+  title: 'Venture IT Solutions | Web Design Sydney & Northern Ireland',
+  description: 'Professional web development services in Sydney and Northern Ireland. Custom websites, e-commerce solutions, and web applications for businesses globally.',
+  keywords: 'web development sydney, web design sydney, web developer sydney, web design bondi, web design coogee, web design randwick, web design eastern suburbs, web design inner east, web design inner west, web design north shore, web design northern beaches, custom web design sydney, ecommerce websites sydney, responsive web design sydney, web development company sydney, website development sydney, digital solutions sydney, web development bondi, web development coogee, web development randwick, web design northern ireland, web design belfast, web developer ni, web design ni, custom web design ni, ecommerce websites ireland, responsive web design belfast, web development company ireland, website development ni, digital solutions northern ireland, web development belfast',
   openGraph: {
-    title: 'Venture IT Solutions | Web Development Northern Ireland',
-    description: 'Professional web development and design services in Northern Ireland. Expert website developers in Belfast, Dublin & across Ireland.',
+    title: 'Venture IT Solutions | Web Development Sydney & Northern Ireland',
+    description: 'Professional web development and design services in Sydney and Northern Ireland. Expert website developers in Bondi, Coogee, Randwick, Eastern Suburbs & across Sydney and Ireland.',
     images: ['/images/venture_logo.png'],
     locale: 'en_GB',
     type: 'website',

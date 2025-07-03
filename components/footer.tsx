@@ -6,14 +6,12 @@ import { Instagram, Twitter, X } from 'lucide-react'
 import Link from 'next/link'
 
 const locations = [
+  { name: 'Sydney', slug: 'sydney' },
+  { name: 'Bondi', slug: 'bondi' },
+  { name: 'Eastern Suburbs', slug: 'eastern-suburbs' },
   { name: 'Belfast', slug: 'belfast' },
-  { name: 'Bangor', slug: 'bangor' },
-  { name: 'Newry', slug: 'newry' },
-  { name: 'Lisburn', slug: 'lisburn' },
-  { name: 'Derry', slug: 'derry' },
   { name: 'Northern Ireland', slug: 'northern-ireland' },
   { name: 'Ireland', slug: 'ireland' },
-  { name: 'UK', slug: 'UK' },
 ]
 
 export function Footer() {
