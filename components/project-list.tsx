@@ -10,6 +10,14 @@ import Image from 'next/image'
 
 const projects = [
   {
+    name: "NextRep AI - iOS Workout Generation App",
+    company: "NextRep AI",
+    description: "Developed an innovative iOS app powered by AI to deliver personalized workout routines tailored to individual goals and performance. Key features include smart exercise recommendations, real-time progress tracking, and adaptive training plans that evolve with the user.",
+    image: "/images/app_icon.png?height=100&width=200",
+    tags: ["iOS Development", "AI Integration", "Mobile App", "React Native"],
+    url: "https://www.nextrepai.com/"
+  },
+  {
     name: "Channel Manager, booking dashboard and payment processing",
     company: "Craig View Luxury Glamping",
     description: "Logo design and website development for a luxury glamping site with payment processing. Bespoke channel manager for Airbnb and Booking.com integration with a booking dashboard and real time statistics",
@@ -32,13 +40,6 @@ const projects = [
     image: "/images/portfolio_1.png?height=200&width=300",
     tags: ["SEO", "Portfolio", "Contact Form"],
     url: "https://darbellstone.com"
-  },
-  {
-    name: "Logo Design and Photography",
-    company: "Drone and Camera Photography",
-    description: "Created company logo and photography for website and social media",
-    image: "/images/dgn_park.jpg?height=200&width=3s00",
-    tags: ["SEO", "Content Marketing", "Analytics"],
   }
 ]
 
