@@ -17,20 +17,20 @@ export async function GET() {
       {
         loc: 'https://www.ventureitsolutions.co.uk',
         lastmod: new Date().toISOString().split('T')[0],
-        changefreq: 'monthly',
+        changefreq: 'weekly',
         priority: '1.0',
       },
       {
         loc: 'https://www.ventureitsolutions.co.uk/projects',
         lastmod: new Date().toISOString().split('T')[0],
         changefreq: 'monthly',
-        priority: '0.8',
+        priority: '0.9',
       },
       {
         loc: 'https://www.ventureitsolutions.co.uk/estimator',
         lastmod: new Date().toISOString().split('T')[0],
         changefreq: 'monthly',
-        priority: '0.8',
+        priority: '0.9',
       },
       {
         loc: 'https://www.ventureitsolutions.co.uk/blog',

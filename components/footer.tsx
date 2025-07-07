@@ -8,10 +8,12 @@ import Link from 'next/link'
 const locations = [
   { name: 'Sydney', slug: 'sydney' },
   { name: 'Bondi', slug: 'bondi' },
+  { name: 'Coogee', slug: 'coogee' },
+  { name: 'Randwick', slug: 'randwick' },
   { name: 'Eastern Suburbs', slug: 'eastern-suburbs' },
+  { name: 'Sydney CBD', slug: 'sydney-cbd' },
   { name: 'Belfast', slug: 'belfast' },
   { name: 'Northern Ireland', slug: 'northern-ireland' },
-  { name: 'Ireland', slug: 'ireland' },
 ]
 
 export function Footer() {
@@ -62,6 +64,16 @@ export function Footer() {
               <li>
                 <Link href="/estimator" className="text-muted-foreground hover:text-primary transition-colors">
                   Project Calculator
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/sitemap.xml" className="text-muted-foreground hover:text-primary transition-colors">
+                  Sitemap
                 </Link>
               </li>
               <li>

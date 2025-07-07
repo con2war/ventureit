@@ -3,10 +3,12 @@ import Link from 'next/link'
 const locations = [
   { name: 'Sydney', slug: 'sydney' },
   { name: 'Bondi', slug: 'bondi' },
+  { name: 'Coogee', slug: 'coogee' },
+  { name: 'Randwick', slug: 'randwick' },
   { name: 'Eastern Suburbs', slug: 'eastern-suburbs' },
+  { name: 'Sydney CBD', slug: 'sydney-cbd' },
   { name: 'Belfast', slug: 'belfast' },
   { name: 'Northern Ireland', slug: 'northern-ireland' },
-  { name: 'Ireland', slug: 'ireland' },
 ]
 
 export function LocationsGrid() {

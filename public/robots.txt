@@ -1,4 +1,24 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.ventureitsolutions.co.uk/sitemap.xml 
+# Sitemap
+Sitemap: https://www.ventureitsolutions.co.uk/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/admin/
+Disallow: /api/auth/
+Disallow: /api/upload/
+Disallow: /_next/
+Disallow: /api/send-contact
+Disallow: /api/send-estimate
+
+# Allow important pages
+Allow: /web-design/
+Allow: /projects
+Allow: /estimator
+Allow: /blog
+Allow: /sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1 

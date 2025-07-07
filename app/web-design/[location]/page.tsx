@@ -27,6 +27,9 @@ export async function generateMetadata({ params }: { params: { location: string 
     title: `Web Design ${capitalizedLocation} | Professional Web Development Services`,
     description: `Professional web design services in ${capitalizedLocation}. Custom websites, e-commerce solutions, and web applications for local businesses. Contact us today!`,
     keywords: `web design ${location}, web development ${location}, website designer ${location}, ecommerce website ${location}, business website ${location}`,
+    alternates: {
+      canonical: `https://www.ventureitsolutions.co.uk/web-design/${params.location}`,
+    },
   }
 }
 

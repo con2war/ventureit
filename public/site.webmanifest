@@ -1,6 +1,7 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Venture IT Solutions - Web Design Sydney & Northern Ireland",
+  "short_name": "Venture IT",
+  "description": "Professional web development services in Sydney and Northern Ireland. Custom websites, e-commerce solutions, and web applications for businesses globally.",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +16,9 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#ff5757",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
 }
