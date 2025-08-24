@@ -4,19 +4,10 @@ import { Badge } from "@/components/ui/badge"
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Card, CardContent } from "@/components/ui/card"
-import { useEffect, useState } from 'react'
-
-interface GeoLocation {
-  city: string;
-  region: string;
-  country: string;
-}
 
 const serviceFeatures = [
   {
     title: "Professional Web Design Sydney",
-    priceGBP: "from £499",
-    priceAUD: "from $950",
     features: [
       "Responsive design for all devices",
       "SEO optimized structure",
@@ -27,8 +18,6 @@ const serviceFeatures = [
   },
   {
     title: "E-commerce Website Design",
-    priceGBP: "from £999",
-    priceAUD: "from $1,900", 
     features: [
       "Secure payment integration",
       "Product management system",
@@ -39,8 +28,6 @@ const serviceFeatures = [
   },
   {
     title: "Custom Web Development",
-    priceGBP: "from £1499",
-    priceAUD: "from $2,850",
     features: [
       "Bespoke functionality",
       "API integration",
@@ -56,32 +43,6 @@ export function ServicesContent() {
     triggerOnce: true,
     threshold: 0.1,
   })
-  const [userLocation, setUserLocation] = useState<GeoLocation | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    // Fetch user's location from IP
-    const fetchLocation = async () => {
-      try {
-        const response = await fetch('https://ipapi.co/json/')
-        const data = await response.json()
-        setUserLocation({
-          city: data.city,
-          region: data.region,
-          country: data.country_name
-        })
-      } catch (error) {
-        console.error('Error fetching location:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchLocation()
-  }, [])
-
-  // Determine if user is in Australia
-  const isAustralianUser = userLocation?.country === "Australia"
 
   return (
     <section id="services" className="py-24 bg-background">
@@ -159,14 +120,6 @@ export function ServicesContent() {
               <Card className="bg-background/5 hover:bg-background/10 transition-colors h-full">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-2xl font-bold text-[#5ce1e6] mb-4">
-                    {isLoading ? "Loading..." : (isAustralianUser ? service.priceAUD : service.priceGBP)}
-                  </p>
-                  {!isLoading && (
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {isAustralianUser ? "Prices in AUD" : "Prices in GBP"}
-                    </p>
-                  )}
                   <ul className="space-y-2">
                     {service.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center">
